@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lenur Studio</title>
+<meta name="description" content="Lenur Studio — premium AI-produced ads, films, reels and animated landing pages for luxury brands.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b0d;--ink:#f3ede2;--mute:#a9a296;--gold:#c9a45c}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Manrope,system-ui,sans-serif;overflow-x:clip}
+h1,h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;line-height:1.05;margin:0;text-wrap:balance}
+a{color:inherit}
+header{padding:clamp(80px,14vh,150px) max(5vw,16px) 40px;max-width:1240px;margin:0 auto}
+header p.k{color:var(--gold);margin:0 0 12px;letter-spacing:.2em;font-size:13px}
+h1{font-size:clamp(44px,7vw,92px);max-width:13ch}
+header p.l{color:var(--mute);max-width:56ch;font-size:18px;margin:20px 0 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:18px;padding:30px max(5vw,16px) 60px;max-width:1240px;margin:0 auto}
+.card{position:relative;display:block;border-radius:22px;overflow:hidden;aspect-ratio:4/5;text-decoration:none;background:#16161a;border:1px solid rgba(201,164,92,.18)}
+.card img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+.card:hover img,.card:focus-visible img{transform:scale(1.06)}
+.card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.85))}
+.card div{position:absolute;left:20px;right:20px;bottom:18px;z-index:1}
+.card b{display:block;font-family:"Cormorant Garamond",serif;font-size:32px;font-weight:600}
+.card span{color:#d9d1c3;font-size:14px}
+.card:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.more{max-width:1240px;margin:0 auto;padding:0 max(5vw,16px) 70px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border-radius:999px;border:1px solid var(--gold);color:var(--ink);text-decoration:none;font-weight:600}
+.btn.p{background:var(--gold);color:#111}
+footer{border-top:1px solid rgba(201,164,92,.2);padding:28px max(5vw,16px);color:var(--mute);font-size:14px;max-width:1240px;margin:0 auto}
+</style>
+</head>
+<body>
+<header>
+  <p class="k">LENUR STUDIO · DOHA</p>
+  <h1>Premium ads that open like a gift</h1>
+  <p class="l">AI-produced brand films, reels, photo sets and animated landing pages for luxury, hospitality, food and lifestyle brands. Every page below is a spec project with a fictional brand — tap one to see it live.</p>
+</header>
+<main class="grid" id="grid"></main>
+<div class="more">
+  <a class="btn p" href="https://drive.google.com/drive/folders/1KMa9jx8n_Ovbj1oF2DolTYxx8Zo-rRx1">See all ad campaigns</a>
+  <span style="color:var(--mute)">lbekirov137@gmail.com</span>
+</div>
+<footer>© Lenur Studio. Brands shown are sample concepts created by the studio; all imagery is AI-generated spec work.</footer>
+<script>
+{
+const p=[["khazna","KHAZNA","Luxury pralines · emerald & gold"],["marsa","MARSA","Dive watch · the page dives with you"],["dana","DANA","Gulf pearls · heritage & lustre"],["sarab","SARAB","Desert resort · a day from dawn to stars"],["zephra","ZEPHRA","Electric hydrofoil · fly in silence"],["khayl","KHAYL","Arabian endurance saddle · cognac & brass"],["aflaj","AFLAJ","Mountain water in crystal · touch the water"],["maida","MAIDA","Travertine dining table · set your own table"],["layali","LAYALI","Home fragrance · scent you can see"],["tannour","TANNOUR","Smart steam oven · turn the copper dial"],["sarra","SARRA","Sunglasses · look through the lenses"],["qalam","QALAM","Fountain pen · sign your name"],["orvante","ORVANTE","Luxury SUV · choose your road"],["voltara","VOLTARA","Emerald supercar · press launch"],["shaheen","SHAHEEN","Falcon coupe · drag falcon into car"],["nawras","NAWRAS","24 m motor yacht · a day aboard, dawn to night"],["jawhara","JAWHARA","Oval diamond watch · it keeps your time"],["durra","DURRA","Pearl couture abaya · inspect every stitch"]];
+document.getElementById('grid').innerHTML=p.map(x=>`<a class="card" href="${x[0]}/"><img src="cover_${x[0]}.jpg" alt="${x[1]} landing page" loading="lazy"><div><b>${x[1]}</b><span>${x[2]}</span></div></a>`).join('');
+}
+</script>
+</body>
+</html>

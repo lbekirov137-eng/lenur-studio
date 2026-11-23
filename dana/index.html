@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DANA Pearls</title>
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* VOICE: quiet, luminous, heirloom — the Gulf's pearling heritage told softly
+   IDEA: the page is a strand being threaded — a single silk line runs down the page and gains a pearl at every section you reach
+   PICTURE: the opening oyster with its glowing pearl, full-bleed; then a soft masonry of frames
+   COLOUR and TYPE: pearl ivory #f7f2ea, nacre blush #ecdcd0, sea-deep #12343b, soft gold #b8955a; Italiana + Jost
+   LAYOUT: minimal top bar, hero, heritage band with dhow, masonry, threading timeline, length chooser, footer */
+:root{color-scheme:light;--bg:#f7f2ea;--blush:#ecdcd0;--sea:#12343b;--gold:#b8955a;--ink:#1d2a2c;--mute:#5d6a69}
+:root[data-theme=dark]{--bg:#0e1d20;--blush:#1b2c2f;--ink:#f1ebe2;--mute:#b5bcb8;color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:300 17px/1.7 Jost,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Italiana,Georgia,serif;font-weight:400;line-height:1.05;text-wrap:balance;margin:0;letter-spacing:.01em}
+img{display:block;width:100%;height:100%;object-fit:cover}
+.top{position:fixed;inset:0 0 auto 0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px max(5vw,16px);background:color-mix(in srgb,var(--bg) 70%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid color-mix(in srgb,var(--gold) 25%,transparent);flex-wrap:wrap}
+.top b{font-family:Italiana,serif;font-size:24px;letter-spacing:.25em;font-weight:400}
+.top nav{display:flex;gap:22px;flex-wrap:wrap}.top a{color:var(--mute);text-decoration:none;font-size:15px}.top a:hover,.top a:focus-visible{color:var(--ink)}
+/* hero with floating pearl particles */
+.hero{position:relative;min-height:min(100svh,900px);display:grid;align-items:center;padding:96px max(5vw,16px) 60px;overflow:hidden;background:#06191c}
+.hero img{position:absolute;inset:0;opacity:.85}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 70% at 70% 50%,transparent,rgba(6,25,28,.85))}
+.hero canvas{position:absolute;inset:0;z-index:1;pointer-events:none}
+.hero .t{position:relative;z-index:2;max-width:560px}
+.hero h1{font-size:clamp(46px,7.5vw,96px);background:linear-gradient(100deg,#f7f2ea 20%,#e9d6b8 40%,#fffaf2 50%,#e9d6b8 60%,#f7f2ea 80%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:nacre 6s ease-in-out infinite}
+@keyframes nacre{0%,100%{background-position:100% 0}50%{background-position:0 0}}
+.hero p{color:#e4ddd2;margin:18px 0 28px;max-width:42ch}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 28px;border-radius:999px;border:1px solid var(--gold);background:var(--gold);color:#fff;text-decoration:none;font:500 15px Jost,sans-serif;letter-spacing:.06em;cursor:pointer;transition:background .3s,color .3s}
+.btn:hover{background:transparent;color:var(--gold)}.btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.band{padding:clamp(56px,8vw,120px) max(5vw,16px);position:relative}
+.wrap{max-width:1180px;margin:0 auto;position:relative}
+.kicker{color:var(--gold);font-size:14px;letter-spacing:.08em;margin:0 0 10px}
+h2{font-size:clamp(36px,5vw,60px);margin-bottom:18px}
+.lead{color:var(--mute);max-width:58ch}
+/* heritage split */
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:center}
+.split .ph{aspect-ratio:4/3;border-radius:6px;overflow:hidden}
+/* masonry */
+.mason{columns:3 260px;column-gap:16px;margin-top:36px}
+.mason figure{break-inside:avoid;margin:0 0 16px;border-radius:6px;overflow:hidden;position:relative;background:var(--blush)}
+.mason img{height:auto;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}.mason figure:hover img{transform:scale(1.04)}
+.mason figcaption{padding:10px 4px 2px;font-size:14px;color:var(--mute);background:var(--bg)}
+/* threading timeline */
+.thread{position:relative;margin-top:40px;padding-left:46px}
+.thread::before{content:"";position:absolute;left:16px;top:0;bottom:0;width:1px;background:color-mix(in srgb,var(--gold) 50%,transparent)}
+.step{position:relative;padding:0 0 46px}
+.step .pearl{position:absolute;left:-41px;top:4px;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0 18%,#f3ece2 40%,#d9c8b4 75%,#b9a48d);box-shadow:0 2px 6px rgba(0,0,0,.18);transform:scale(0)}
+.step h3{font-size:clamp(26px,3vw,34px);margin-bottom:6px}.step p{color:var(--mute);max-width:52ch;margin:0}
+/* chooser */
+.choose{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(24px,5vw,64px);align-items:center;background:var(--blush);border-radius:8px;padding:clamp(22px,4vw,52px)}
+.choose .ph{aspect-ratio:16/11;border-radius:6px;overflow:hidden}
+.opts{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 22px}
+.opt{min-height:44px;padding:0 18px;border-radius:999px;border:1px solid color-mix(in srgb,var(--ink) 30%,transparent);background:transparent;color:var(--ink);font:400 15px Jost,sans-serif;cursor:pointer}
+.opt[aria-pressed=true]{background:var(--sea);border-color:var(--sea);color:#f7f2ea}
+.note{min-height:1.4em;font-size:14px;color:var(--gold)}
+.reveal{opacity:0;transform:translateY(30px)}
+footer{padding:40px max(5vw,16px);color:var(--mute);font-size:14px;display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between;border-top:1px solid color-mix(in srgb,var(--gold) 25%,transparent)}
+.demo{font-size:13px;color:var(--mute);margin-top:14px}
+@media(max-width:760px){.split,.choose{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.step .pearl{transform:none}}
+</style>
+</head>
+<body>
+<header class="top"><b>DANA</b><nav aria-label="Main"><a href="#heritage">Heritage</a><a href="#collection">Collection</a><a href="#choose">Choose</a></nav></header>
+
+<section class="hero">
+  <img src="img/s01.jpg" alt="An oyster shell opening underwater to reveal a single glowing pearl">
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div class="t">
+    <h1>Born of the Gulf sea</h1>
+    <p>Natural pearls, hand-matched and strung on silk, finished with a brushed-gold crescent clasp. An heirloom from the first day.</p>
+    <a class="btn" href="#choose">Find your strand</a>
+  </div>
+</section>
+
+<section class="band" id="heritage"><div class="wrap split">
+  <div class="ph reveal"><img src="img/s03.jpg" alt="A wooden dhow sailing on a calm Gulf sea at dawn" loading="lazy"></div>
+  <div class="reveal">
+    <p class="kicker">Heritage</p>
+    <h2>A thousand years of diving</h2>
+    <p class="lead">Long before oil, the Gulf was known for its pearls. DANA honours the divers who sailed out on dhows each summer, with strands chosen pearl by pearl for lustre, tone and shape.</p>
+  </div>
+</div></section>
+
+<section class="band" id="collection" style="background:var(--blush)"><div class="wrap">
+  <p class="kicker">The collection</p>
+  <h2 class="reveal">Lustre you can feel</h2>
+  <div class="mason" id="mason"></div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <p class="kicker">How a strand is made</p>
+  <h2 class="reveal">Threaded by hand</h2>
+  <div class="thread" id="thread"></div>
+</div></section>
+
+<section class="band" id="choose"><div class="wrap">
+  <div class="choose">
+    <div class="ph"><img src="img/s05.jpg" alt="Pearl necklace in an open ivory leather jewellery box" loading="lazy"></div>
+    <div>
+      <p class="kicker">Your DANA</p>
+      <h2>Choose the length</h2>
+      <p class="lead">Each strand comes in an ivory leather case with a certificate of origin.</p>
+      <div class="opts" role="group" aria-label="Length" id="opts"></div>
+      <button class="btn" type="button" id="req">Book a private viewing</button>
+      <p class="note" id="note" aria-live="polite"></p>
+    </div>
+  </div>
+  <p class="demo">DANA is a sample brand created by Lenur Studio to show a product landing page; all images are AI-generated spec work.</p>
+</div></section>
+
+<footer><span>DANA — pearl house, Doha</span><span>Landing page and visuals by Lenur Studio</span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+{
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const pics=[["s02","On wet stone at sunrise"],["s04","The crescent clasp"],["s06","Worn high, worn modestly"],["s07","Sorted by hand"],["s08","Reflections at blue hour"],["s09","With a white rose"],["s10","Lit like the moon"]];
+document.getElementById('mason').innerHTML=pics.map(p=>`<figure class="reveal"><img src="img/${p[0]}.jpg" alt="${p[1]}" loading="lazy"><figcaption>${p[1]}</figcaption></figure>`).join('');
+const steps=[["Chosen","Pearls are sorted by lustre and tone on dark velvet, a few from every thousand."],["Matched","Each strand is graded so neighbouring pearls are near twins in size and glow."],["Knotted","A silk knot between every pearl keeps them from touching and protects the strand."],["Finished","A brushed-gold crescent clasp closes the circle, and the strand is checked once more."]];
+document.getElementById('thread').innerHTML=steps.map(s=>`<div class="step"><span class="pearl"></span><h3>${s[0]}</h3><p>${s[1]}</p></div>`).join('');
+const lens=["Choker, 40 cm","Princess, 45 cm","Matinee, 55 cm","Opera, 80 cm"];let pick=lens[1];
+const opts=document.getElementById('opts');
+const draw=()=>{opts.innerHTML=lens.map(l=>`<button type="button" class="opt" aria-pressed="${l===pick}">${l}</button>`).join('')};draw();
+opts.addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b)return;pick=b.textContent;draw()});
+document.getElementById('req').addEventListener('click',()=>{document.getElementById('note').textContent=`Demo page: a real launch would book a viewing for the ${pick.toLowerCase()} strand.`});
+/* floating pearls */
+const cv=document.getElementById('fx'),ctx=cv.getContext('2d');let W=0,H=0,dots=[];
+const size=()=>{const r=cv.getBoundingClientRect();W=cv.width=r.width*devicePixelRatio;H=cv.height=r.height*devicePixelRatio;dots=Array.from({length:26},()=>({x:Math.random()*W,y:Math.random()*H,r:(2+Math.random()*6)*devicePixelRatio,v:(.15+Math.random()*.35)*devicePixelRatio,p:Math.random()*6.28}))};
+const ro=new ResizeObserver(size);ro.observe(cv);size();
+const frame=t=>{ctx.clearRect(0,0,W,H);for(const d of dots){d.y-=d.v;d.x+=Math.sin(t/1600+d.p)*.25;if(d.y<-10)d.y=H+10;const g=ctx.createRadialGradient(d.x-d.r*.3,d.y-d.r*.3,d.r*.1,d.x,d.y,d.r);g.addColorStop(0,'rgba(255,255,255,.95)');g.addColorStop(.6,'rgba(236,222,200,.55)');g.addColorStop(1,'rgba(200,180,150,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,6.283);ctx.fill()}if(!reduce)requestAnimationFrame(frame)};
+requestAnimationFrame(frame);
+if(!reduce&&window.anime){
+  const io=new IntersectionObserver(es=>{es.forEach(en=>{if(!en.isIntersecting)return;anime({targets:en.target,opacity:[0,1],translateY:[30,0],duration:1000,easing:'easeOutCubic'});io.unobserve(en.target)})},{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  const io2=new IntersectionObserver(es=>{es.forEach(en=>{if(!en.isIntersecting)return;anime({targets:en.target.querySelector('.pearl'),scale:[0,1],duration:900,easing:'easeOutElastic(1,.6)'});io2.unobserve(en.target)})},{threshold:.6});
+  document.querySelectorAll('.step').forEach(el=>io2.observe(el));
+}else{document.querySelectorAll('.reveal').forEach(el=>{el.style.opacity=1;el.style.transform='none'});document.querySelectorAll('.pearl').forEach(p=>p.style.transform='none')}
+}
+</script>
+</body>
+</html>

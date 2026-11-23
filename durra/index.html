@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DURRA — Pearl Couture Abaya</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Hanken+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* VOICE: quiet couture — restraint first, then the pearl
+   IDEA: a pearl thread sews itself down the page as you scroll; a jeweller's loupe lets you inspect every stitch
+   COLOUR and TYPE: ink #0d0b0a, marble #ece8e2, champagne #c8a96a, pearl #fbf8f2; Libre Caslon Display + Hanken Grotesk */
+:root{--ink:#0d0b0a;--marble:#ece8e2;--gold:#c8a96a;--pearl:#fbf8f2;--mute:#8d867d}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--marble);color:var(--ink);font:300 16px/1.75 "Hanken Grotesk",system-ui,sans-serif;overflow-x:clip}
+h1,h2{font-family:"Libre Caslon Display",Georgia,serif;font-weight:400;line-height:1.02;margin:0;text-wrap:balance}
+img{display:block;width:100%;height:100%;object-fit:cover}
+#thread{position:absolute;top:0;left:0;width:100%;pointer-events:none;z-index:5}
+.nav{position:fixed;inset:0 0 auto;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:18px max(5vw,16px);color:var(--pearl);mix-blend-mode:difference}
+.nav b{font:400 20px "Libre Caslon Display",serif;letter-spacing:.5em}
+.nav a{color:inherit;text-decoration:none;font-size:12px;letter-spacing:.22em;text-transform:uppercase;margin-left:22px}
+.hero{position:relative;height:min(100svh,980px);min-height:600px;background:var(--ink);color:var(--pearl);overflow:hidden;display:grid;align-items:end}
+.hero>img{position:absolute;inset:0;object-position:center 30%;opacity:.92}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(13,11,10,.85),rgba(13,11,10,.2) 55%,transparent),linear-gradient(transparent 60%,rgba(13,11,10,.8))}
+.hero .in{position:relative;z-index:2;padding:0 max(5vw,16px) clamp(48px,9vh,100px)}
+.hero h1{font-size:clamp(70px,13vw,200px);letter-spacing:.1em}
+.ar{font-family:serif;color:var(--gold);font-size:clamp(28px,4vw,46px);display:block;margin:4px 0 16px;text-align:inherit}
+.hero p{max-width:36ch;font-size:18px;color:#d9d3ca;margin:0 0 30px}
+.btn{display:inline-flex;align-items:center;min-height:50px;padding:0 32px;border:1px solid currentColor;color:inherit;text-decoration:none;font:500 12px "Hanken Grotesk",sans-serif;letter-spacing:.26em;text-transform:uppercase;transition:all .3s}
+.btn:hover{background:var(--gold);border-color:var(--gold);color:var(--ink)}.btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.band{position:relative;padding:clamp(80px,11vw,150px) max(5vw,16px)}
+.wrap{max-width:1180px;margin:0 auto;position:relative;z-index:6}
+.kicker{font-size:11px;letter-spacing:.36em;text-transform:uppercase;color:#9a7f45;margin:0 0 14px}
+h2{font-size:clamp(36px,5.6vw,80px);margin-bottom:20px}
+.lead{color:#4b4640;max-width:50ch;font-size:17px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);align-items:center}
+.count{font:400 clamp(64px,10vw,140px)/1 "Libre Caslon Display",serif;color:var(--ink)}
+.count small{display:block;font:500 11px "Hanken Grotesk",sans-serif;letter-spacing:.3em;text-transform:uppercase;color:var(--mute);margin-top:10px}
+.craft{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:12px;margin-top:50px}
+.craft figure{margin:0;overflow:hidden;aspect-ratio:4/5}
+.craft figure:first-child{aspect-ratio:auto}
+/* loupe */
+.loupe-wrap{position:relative;aspect-ratio:16/9;overflow:hidden;cursor:none;background:var(--ink);touch-action:pan-y}
+.loupe{position:absolute;width:220px;height:220px;border-radius:50%;border:2px solid var(--gold);box-shadow:0 10px 40px rgba(0,0,0,.45),inset 0 0 0 6px rgba(251,248,242,.15);background-repeat:no-repeat;pointer-events:none;opacity:0;transition:opacity .3s;left:50%;top:50%;transform:translate(-50%,-50%)}
+.loupe-wrap.on .loupe{opacity:1}
+.hint{position:absolute;left:16px;bottom:16px;z-index:2;background:rgba(13,11,10,.7);color:var(--pearl);font-size:11px;letter-spacing:.22em;text-transform:uppercase;padding:8px 12px}
+/* dark story */
+.dark{background:var(--ink);color:var(--pearl)}
+.dark .lead{color:#b9b1a6}
+.story{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:44px}
+.story figure{margin:0;position:relative;overflow:hidden;aspect-ratio:3/4}
+.story figure img{transition:transform 1.4s ease}.story figure:hover img{transform:scale(1.05)}
+figcaption{position:absolute;left:0;right:0;bottom:0;padding:40px 16px 14px;background:linear-gradient(transparent,rgba(13,11,10,.85));font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--pearl)}
+.views{margin-top:24px;aspect-ratio:16/9;overflow:hidden}
+.final{position:relative;min-height:90vh;display:grid;place-items:center;text-align:center;background:var(--ink);color:var(--pearl);overflow:hidden}
+.final>img{position:absolute;inset:0;opacity:.5}
+.final::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(13,11,10,.82) 30%,rgba(13,11,10,.55))}
+.final .in{position:relative;z-index:6;padding:0 16px}
+.final p{color:#d9d3ca;max-width:42ch;margin:0 auto 30px}
+footer{padding:28px max(5vw,16px);background:var(--ink);color:#6e675f;font-size:12px;letter-spacing:.1em;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.rv{opacity:0;transform:translateY(28px)}
+@media (max-width:820px){.two{grid-template-columns:1fr}.craft{grid-template-columns:1fr 1fr}.craft figure:first-child{grid-column:span 2;aspect-ratio:16/10}.story{grid-template-columns:1fr}.story figure{aspect-ratio:4/3}.nav a{display:none}.loupe{width:150px;height:150px}.hero::after{background:linear-gradient(transparent 20%,rgba(13,11,10,.9))}}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<svg id="thread" aria-hidden="true"><path id="tp" fill="none" stroke="#c8a96a" stroke-width="1.2" stroke-linecap="round"/><g id="pearls"></g></svg>
+<nav class="nav"><b>DURRA</b><div><a href="#craft">Craft</a><a href="#loupe">Inspect</a><a href="#atelier">Atelier</a></div></nav>
+
+<header class="hero">
+  <img src="img/s10.jpg" alt="Black abaya with a gold and pearl placket under a single spotlight">
+  <div class="in">
+    <h1 id="title">Durra</h1>
+    <span class="ar" lang="ar">دُرّة</span>
+    <p id="sub">A black abaya of heavy crepe, and a single line of hand-sewn pearls from collar to hem. Nothing more is needed.</p>
+    <a class="btn" id="cta" href="#atelier">Book a fitting at the atelier</a>
+  </div>
+</header>
+
+<section class="band" id="craft">
+  <div class="wrap two">
+    <div>
+      <p class="kicker rv">The craft</p>
+      <h2 class="rv">Every pearl is sewn <i>by one pair of hands.</i></h2>
+      <p class="lead rv">Freshwater pearls, gold bullion thread and a placket that takes nine days to finish. The same artisan begins and ends each abaya.</p>
+    </div>
+    <div class="rv">
+      <div class="count"><span id="pc">0</span><small>pearls on a single abaya</small></div>
+      <div class="count" style="margin-top:30px"><span id="dc">0</span><small>days of handwork</small></div>
+    </div>
+  </div>
+  <div class="wrap craft">
+    <figure class="rv"><img src="img/s03.jpg" alt="Artisan's hands sewing pearls onto a gold-embroidered cuff" loading="lazy"></figure>
+    <figure class="rv"><img src="img/s01.jpg" alt="Rows of pearls being stitched onto black crepe on marble" loading="lazy"></figure>
+    <figure class="rv"><img src="img/s04.jpg" alt="Macro of a gold lace cuff set with pearls" loading="lazy"></figure>
+  </div>
+</section>
+
+<section class="band" id="loupe" style="padding-top:0">
+  <div class="wrap">
+    <p class="kicker rv">Inspect it</p>
+    <h2 class="rv">Look closer. <i>We want you to.</i></h2>
+    <p class="lead rv">Move the loupe across the abaya, the way you would in the atelier.</p>
+    <div class="loupe-wrap rv" id="lw" tabindex="0" aria-label="Abaya on a mannequin; move the pointer to magnify details">
+      <img src="img/s02.jpg" alt="Black abaya with a pearl and gold placket on a mannequin in a marble room" id="limg">
+      <div class="loupe" id="lp"></div>
+      <span class="hint">Drag or hover to magnify</span>
+    </div>
+    <div class="views rv"><img src="img/s07.jpg" alt="The abaya from front, back and side on three mannequins" loading="lazy"></div>
+  </div>
+</section>
+
+<section class="band dark">
+  <div class="wrap">
+    <p class="kicker rv" style="color:var(--gold)">Worn</p>
+    <h2 class="rv">From the marble hall <i>to the corniche.</i></h2>
+    <div class="story">
+      <figure class="rv"><img src="img/s05.jpg" alt="A woman in the abaya, seen from behind, walking down a marble corridor" loading="lazy"><figcaption>The arrival</figcaption></figure>
+      <figure class="rv"><img src="img/s06.jpg" alt="A woman in the abaya, seen from behind, stepping into a white car as a valet holds the door" loading="lazy"><figcaption>The departure</figcaption></figure>
+      <figure class="rv"><img src="img/s09.jpg" alt="Two women in matching abayas, seen from behind, on a seafront promenade at dusk" loading="lazy"><figcaption>The evening</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="atelier">
+  <img src="img/s08.jpg" alt="The abaya folded in an ivory gift box with satin ribbon" loading="lazy">
+  <div class="in">
+    <p class="kicker rv" style="color:var(--gold)">The atelier</p>
+    <h2 class="rv">Made to your measure.</h2>
+    <p class="rv">Private fittings by appointment. Delivered folded in ivory silk paper, ready for Eid, a wedding, or the first evening of the season.</p>
+    <a class="btn rv" href="#atelier">Book a fitting</a>
+  </div>
+</section>
+
+<footer><span>DURRA · pearl couture abaya</span><span>Concept advertising by Lenur Studio</span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+(function(){
+  var A=!window.matchMedia('(prefers-reduced-motion: reduce)').matches && window.anime;
+  /* loupe */
+  var lw=document.getElementById('lw'),lp=document.getElementById('lp'),Z=2.6;
+  lp.style.backgroundImage='url(img/s02.jpg)';
+  function mv(cx,cy){var r=lw.getBoundingClientRect(),x=cx-r.left,y=cy-r.top;
+    lp.style.left=x+'px';lp.style.top=y+'px';lp.style.backgroundSize=(r.width*Z)+'px '+(r.height*Z)+'px';
+    var s=lp.offsetWidth/2;lp.style.backgroundPosition=(-(x*Z-s))+'px '+(-(y*Z-s))+'px'}
+  lw.addEventListener('pointermove',function(e){lw.classList.add('on');mv(e.clientX,e.clientY)});
+  lw.addEventListener('pointerleave',function(){lw.classList.remove('on')});
+  lw.addEventListener('focus',function(){var r=lw.getBoundingClientRect();lw.classList.add('on');mv(r.left+r.width*.5,r.top+r.height*.55)});
+  lw.addEventListener('blur',function(){lw.classList.remove('on')});
+  /* pearl thread down the page */
+  var svg=document.getElementById('thread'),tp=document.getElementById('tp'),pg=document.getElementById('pearls'),L=0,pts=[];
+  function build(){
+    var H=document.documentElement.scrollHeight,W=document.documentElement.clientWidth;svg.setAttribute('height',H);svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    var x0=W*.93,d='M'+x0+' '+innerHeight*.9,n=Math.ceil(H/500);
+    for(var i=1;i<=n;i++){var y=innerHeight*.9+i*500,x=i%2?W*.97:W*.89;d+=' S'+x+' '+(y-250)+' '+(W*.93)+' '+y}
+    tp.setAttribute('d',d);L=tp.getTotalLength();tp.style.strokeDasharray=L;
+    pg.innerHTML='';pts=[];
+    for(var k=0;k<L;k+=46){var p=tp.getPointAtLength(k),c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      c.setAttribute('cx',p.x);c.setAttribute('cy',p.y);c.setAttribute('r',4);c.setAttribute('fill','#fbf8f2');c.setAttribute('stroke','#d6cfc3');c.style.opacity=0;pg.appendChild(c);pts.push([k,c])}
+    sc()}
+  function sc(){var prog=Math.min(1,(scrollY+innerHeight)/document.documentElement.scrollHeight),len=L*prog;
+    tp.style.strokeDashoffset=L-len;pts.forEach(function(q){q[1].style.opacity=q[0]<len?1:0})}
+  if(A){build();addEventListener('scroll',sc,{passive:true});addEventListener('resize',build)}
+  if(!A){document.querySelectorAll('.rv').forEach(function(e){e.style.opacity=1;e.style.transform='none'});
+    document.getElementById('pc').textContent='1,240';document.getElementById('dc').textContent='9';return;}
+  anime.timeline({easing:'easeOutExpo'})
+    .add({targets:'.hero>img',scale:[1.12,1],duration:2600},0)
+    .add({targets:'#title',opacity:[0,1],letterSpacing:['.45em','.1em'],duration:1800},200)
+    .add({targets:['.ar','#sub','#cta'],opacity:[0,1],translateY:[16,0],delay:anime.stagger(140),duration:900},'-=1100');
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;io.unobserve(e.target);
+    anime({targets:e.target,opacity:[0,1],translateY:[28,0],duration:1100,easing:'easeOutCubic'});
+    if(e.target.querySelector&&e.target.querySelector('#pc')){
+      var o={p:0,d:0};anime({targets:o,p:1240,d:9,round:1,duration:2200,easing:'easeOutExpo',update:function(){document.getElementById('pc').textContent=o.p.toLocaleString('en');document.getElementById('dc').textContent=o.d}})}
+  })},{threshold:.15});
+  document.querySelectorAll('.rv').forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>

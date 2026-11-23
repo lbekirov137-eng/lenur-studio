@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MARSA Dive Watch</title>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;1,6..96,500&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: deep-sea calm, engineered precision, a diver's logbook
+   IDEA: the page is a dive — you descend from surface light into navy depth as you scroll; a depth gauge on the side counts the metres
+   PICTURE: the watch sinking through turquoise light rays, full-bleed; then a horizontal card carousel and live spec counters
+   COLOUR and TYPE: surface turquoise #2bb3c0 → navy #061529, steel #c9d3dc, gold indices #d8b45a; Bodoni Moda + Sora
+   LAYOUT: glass nav, hero, specs ticker row, depth carousel, story rows, bracelet configurator, footer */
+:root{color-scheme:dark;--deep:#061529;--navy:#0b2545;--steel:#c9d3dc;--gold:#d8b45a;--ink:#eef4f8;--mute:#9fb3c4;--sea:#2bb3c0}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;color:var(--ink);font:16px/1.6 Sora,system-ui,sans-serif;overflow-x:clip;background:linear-gradient(180deg,#0e4f6b 0%,#0b2545 22%,#061529 55%,#030b17 100%)}
+h1,h2,h3{font-family:"Bodoni Moda",Georgia,serif;font-weight:600;line-height:1.05;text-wrap:balance;margin:0}
+img{display:block;width:100%;height:100%;object-fit:cover}
+.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:clamp(12px,3vw,28px);align-items:center;padding:10px 22px;border-radius:16px;background:rgba(6,21,41,.45);backdrop-filter:blur(14px) saturate(150%);-webkit-backdrop-filter:blur(14px) saturate(150%);border:1px solid rgba(201,211,220,.25);max-width:calc(100vw - 24px);flex-wrap:wrap;justify-content:center}
+.nav b{font-family:"Bodoni Moda",serif;letter-spacing:.2em;color:var(--steel)}
+.nav a{color:var(--mute);text-decoration:none;font-size:14px}.nav a:hover,.nav a:focus-visible{color:var(--ink)}
+/* depth gauge */
+.gauge{position:fixed;right:max(14px,2vw);top:50%;transform:translateY(-50%);z-index:15;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:13px;color:var(--steel)}
+.gauge .bar{width:3px;height:180px;border-radius:3px;background:rgba(201,211,220,.2);position:relative;overflow:hidden}
+.gauge .fill{position:absolute;left:0;right:0;top:0;height:0;background:linear-gradient(var(--sea),var(--gold))}
+.gauge output{font-variant-numeric:tabular-nums;white-space:nowrap}
+.hero{position:relative;min-height:min(100svh,880px);display:grid;align-items:end;padding:0 max(5vw,16px) clamp(40px,8vh,90px);overflow:hidden}
+.hero img{position:absolute;inset:0;z-index:-2;animation:sink 16s ease-out forwards}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(6,21,41,0) 35%,rgba(6,21,41,.9))}
+@keyframes sink{from{transform:scale(1.12) translateY(-3%)}to{transform:scale(1) translateY(0)}}
+.hero h1{font-size:clamp(40px,7vw,90px);max-width:11ch}
+.hero h1 .c{opacity:0}
+.hero p{color:#cfe0ea;max-width:46ch;margin:18px 0 26px;font-size:17px}
+.btn{position:relative;display:inline-flex;align-items:center;min-height:48px;padding:0 26px;border-radius:12px;color:var(--deep);background:var(--steel);font:600 15px Sora,sans-serif;text-decoration:none;border:0;cursor:pointer;isolation:isolate}
+.btn::before{content:"";position:absolute;inset:-2px;border-radius:14px;z-index:-1;background:conic-gradient(from var(--a,0deg),var(--gold),var(--sea),var(--steel),var(--gold));animation:spin 4s linear infinite}
+@property --a{syntax:"<angle>";initial-value:0deg;inherits:false}
+@keyframes spin{to{--a:360deg}}
+.btn:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+.band{padding:clamp(48px,7vw,110px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+.kicker{color:var(--gold);font-size:14px;margin:0 0 10px}
+h2{font-size:clamp(32px,4.4vw,52px);margin-bottom:18px}
+.lead{color:var(--mute);max-width:60ch;font-size:17px}
+/* spec tickers */
+.specs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin-top:34px;background:rgba(201,211,220,.18);border:1px solid rgba(201,211,220,.18);border-radius:18px;overflow:hidden}
+.spec{background:var(--deep);padding:24px 20px}
+.spec b{display:block;font:500 clamp(34px,4vw,52px)/1 "Bodoni Moda",serif;color:var(--steel);font-variant-numeric:tabular-nums;white-space:nowrap}
+.spec span{color:var(--mute);font-size:14px}
+/* carousel with spotlight cards */
+.rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 18px;margin-top:30px;scrollbar-width:thin}
+.card{flex:0 0 min(78vw,420px);scroll-snap-align:start;position:relative;border-radius:20px;overflow:hidden;aspect-ratio:4/5;background:var(--navy);margin:0}
+.card::after{content:"";position:absolute;inset:0;background:radial-gradient(260px circle at var(--x,50%) var(--y,50%),rgba(216,180,90,.22),transparent 60%);opacity:0;transition:opacity .3s}
+.card:hover::after{opacity:1}
+.card figcaption{position:absolute;left:18px;right:18px;bottom:16px;z-index:1;font-size:15px;text-shadow:0 2px 12px rgba(0,0,0,.7)}
+.ctl{display:flex;gap:10px;justify-content:flex-end}
+.ctl button{width:44px;height:44px;border-radius:50%;border:1px solid rgba(201,211,220,.35);background:transparent;color:var(--ink);font-size:18px;cursor:pointer}
+.row{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(24px,5vw,70px);align-items:center;margin-top:clamp(40px,6vw,80px)}
+.row.flip{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)}.row.flip .ph{order:2}
+.ph{aspect-ratio:16/10;border-radius:22px;overflow:hidden}
+.row h3{font-size:clamp(26px,3vw,38px);margin-bottom:12px}.row p{color:var(--mute);max-width:48ch}
+/* configurator */
+.cfg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center;background:rgba(11,37,69,.55);border:1px solid rgba(201,211,220,.18);border-radius:28px;padding:clamp(22px,4vw,48px)}
+.cfg .ph{aspect-ratio:1/1}
+.opts{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 22px}
+.opt{min-height:44px;padding:0 18px;border-radius:12px;border:1px solid rgba(201,211,220,.35);background:transparent;color:var(--ink);font:500 15px Sora,sans-serif;cursor:pointer}
+.opt[aria-pressed=true]{background:var(--steel);color:var(--deep);border-color:var(--steel)}
+.note{min-height:1.4em;color:var(--gold);font-size:14px}
+.reveal{opacity:0;transform:translateY(36px)}
+footer{padding:40px max(5vw,16px);color:var(--mute);font-size:14px;display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between}
+.demo{font-size:13px;color:var(--mute);margin-top:14px}
+@media(max-width:600px){.nav{flex-wrap:nowrap;gap:12px;padding:8px 14px;white-space:nowrap}.nav a{font-size:13px}.nav b{font-size:14px;letter-spacing:.18em}}
+@media(max-width:760px){.specs{grid-template-columns:repeat(2,minmax(0,1fr))}.row,.row.flip,.cfg{grid-template-columns:minmax(0,1fr)}.row.flip .ph{order:0}.gauge{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal,.hero h1 .c{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Main"><b>MARSA</b><a href="#specs">Specs</a><a href="#dive">The dive</a><a href="#build">Configure</a></nav>
+<div class="gauge" aria-hidden="true"><span>0 m</span><div class="bar"><div class="fill" id="fill"></div></div><output id="depth">0 m</output></div>
+
+<header class="hero">
+  <img src="img/s01.jpg" alt="Steel dive watch with a navy dial sinking through turquoise water and light rays">
+  <div>
+    <h1 id="ht">Made for the deep blue</h1>
+    <p>A 41 mm steel diver with a navy sunburst dial and gold indices, built in Doha for the Gulf's reefs and the boardroom after.</p>
+    <a class="btn" href="#build">Configure yours</a>
+  </div>
+</header>
+
+<section class="band" id="specs"><div class="wrap">
+  <p class="kicker">Engineered to dive</p>
+  <h2 class="reveal">Precision you can read at depth</h2>
+  <p class="lead reveal">Ceramic bezel, luminous gold indices and a screw-down crown. Every figure below is the sample spec of this demo brand.</p>
+  <div class="specs reveal" id="specGrid"></div>
+</div></section>
+
+<section class="band" id="dive"><div class="wrap">
+  <div style="display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap">
+    <div><p class="kicker">The dive</p><h2 class="reveal" style="margin:0">From reef to deck</h2></div>
+    <div class="ctl"><button type="button" id="prev" aria-label="Previous">←</button><button type="button" id="next" aria-label="Next">→</button></div>
+  </div>
+  <div class="rail" id="rail"></div>
+  <div id="rows"></div>
+</div></section>
+
+<section class="band" id="build"><div class="wrap">
+  <div class="cfg">
+    <div class="ph"><img src="img/s06.jpg" alt="Watch resting in a navy leather presentation box"></div>
+    <div>
+      <p class="kicker">Your MARSA</p>
+      <h2>Choose the strap</h2>
+      <p class="lead">Every watch arrives in a navy leather box with a spare strap of your choice.</p>
+      <div class="opts" role="group" aria-label="Strap" id="opts"></div>
+      <button class="btn" type="button" id="req">Request a viewing</button>
+      <p class="note" id="note" aria-live="polite"></p>
+    </div>
+  </div>
+  <p class="demo">MARSA is a sample brand created by Lenur Studio to show a product landing page; all images are AI-generated spec work.</p>
+</div></section>
+
+<footer><span>MARSA — watchmakers, Doha</span><span>Landing page and visuals by Lenur Studio</span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+{
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const specs=[[41,"mm","Steel case"],[300,"m","Water resistance"],[70,"h","Power reserve"],[120,"clicks","Ceramic bezel"]];
+document.getElementById('specGrid').innerHTML=specs.map(s=>`<div class="spec"><b data-n="${s[0]}">0 ${s[1]}</b><span>${s[2]}</span></div>`).join('');
+const cards=[["s02","Sunburst navy dial, gold hands"],["s04","On the reef at 30 m"],["s03","Spray, rock and sunset"],["s08","Screw-down crown"],["s05","On deck"],["s09","Mirror-still"]];
+const rail=document.getElementById('rail');
+rail.innerHTML=cards.map(c=>`<figure class="card"><img src="img/${c[0]}.jpg" alt="${c[1]}" loading="lazy"><figcaption>${c[1]}</figcaption></figure>`).join('');
+rail.addEventListener('pointermove',e=>{const c=e.target.closest('.card');if(!c)return;const r=c.getBoundingClientRect();c.style.setProperty('--x',(e.clientX-r.left)+'px');c.style.setProperty('--y',(e.clientY-r.top)+'px')});
+const step=()=>rail.querySelector('.card').getBoundingClientRect().width+16;
+document.getElementById('prev').addEventListener('click',()=>rail.scrollBy({left:-step(),behavior:'smooth'}));
+document.getElementById('next').addEventListener('click',()=>rail.scrollBy({left:step(),behavior:'smooth'}));
+const rows=[["s07","Gulf born","Worn at the wheel of a speedboat or under a thobe sleeve, it is sized for every wrist."],["s10","Lit in gold","Gold-rimmed indices catch the last light on the surface and glow at depth."]];
+document.getElementById('rows').innerHTML=rows.map((r,i)=>`<div class="row ${i%2?'flip':''}"><div class="ph reveal"><img src="img/${r[0]}.jpg" alt="${r[1]}" loading="lazy"></div><div class="reveal"><h3>${r[1]}</h3><p>${r[2]}</p></div></div>`).join('');
+const straps=["Steel bracelet","Navy rubber","Sand canvas","Black leather"];let pick=straps[0];
+const opts=document.getElementById('opts');
+const draw=()=>{opts.innerHTML=straps.map(s=>`<button type="button" class="opt" aria-pressed="${s===pick}">${s}</button>`).join('')};draw();
+opts.addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b)return;pick=b.textContent;draw()});
+document.getElementById('req').addEventListener('click',()=>{document.getElementById('note').textContent=`Demo page: a real launch would book a viewing with the ${pick.toLowerCase()}.`});
+const h=document.getElementById('ht');
+h.innerHTML=[...h.textContent].map(ch=>ch===' '?' ':`<span class="c">${ch}</span>`).join('');
+const fill=document.getElementById('fill'),depth=document.getElementById('depth');
+const onScroll=()=>{const max=document.documentElement.scrollHeight-innerHeight;const p=max>0?scrollY/max:0;fill.style.height=(p*100)+'%';depth.textContent=Math.round(p*300)+' m'};
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+const tick=el=>{const n=+el.dataset.n,unit=el.textContent.split(' ')[1];if(reduce||!window.anime){el.textContent=n+' '+unit;return}const o={v:0};anime({targets:o,v:n,duration:1600,easing:'easeOutExpo',update:()=>{el.textContent=Math.round(o.v)+' '+unit}})};
+if(!reduce&&window.anime){
+  anime({targets:'.hero h1 .c',opacity:[0,1],translateY:[18,0],delay:anime.stagger(40,{start:300}),duration:700,easing:'easeOutCubic'});
+  const io=new IntersectionObserver(es=>{es.forEach(en=>{if(!en.isIntersecting)return;anime({targets:en.target,opacity:[0,1],translateY:[36,0],duration:900,easing:'easeOutCubic'});en.target.querySelectorAll?.('[data-n]').forEach(tick);io.unobserve(en.target)})},{threshold:.2});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+}else{document.querySelectorAll('.reveal,.hero h1 .c').forEach(el=>{el.style.opacity=1;el.style.transform='none'});document.querySelectorAll('[data-n]').forEach(tick)}
+}
+</script>
+</body>
+</html>

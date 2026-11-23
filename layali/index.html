@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LAYALI — Home Fragrance of the Night</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Karla:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: sensual, slow, nocturnal — the scent of a Gulf evening at home
+   IDEA: scent you can see — a plum haze follows your cursor/finger; notes unfold like a perfume pyramid
+   COLOUR and TYPE: night #120b10, plum #5a2a4a, mauve #c9a2bd, rose gold #d4a28a; Playfair Display + Karla */
+:root{--night:#120b10;--plum:#5a2a4a;--mauve:#c9a2bd;--rose:#d4a28a;--txt:#efe4ea;--mute:#a8939f}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--night);color:var(--txt);font:300 16px/1.7 Karla,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Playfair Display",Georgia,serif;font-weight:400;line-height:1.05;margin:0;text-wrap:balance}
+img{display:block;width:100%;height:100%;object-fit:cover}
+#haze{position:fixed;inset:0;pointer-events:none;z-index:40;mix-blend-mode:screen}
+.nav{background:linear-gradient(rgba(18,11,16,.85),rgba(18,11,16,0));position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:18px max(5vw,16px)}
+.nav b{font:400 20px "Playfair Display",serif;letter-spacing:.4em}
+.nav a{color:var(--mute);text-decoration:none;font-size:13px;letter-spacing:.15em;text-transform:uppercase;margin-left:22px}.nav a:hover{color:var(--rose)}
+.hero{position:relative;min-height:min(100svh,920px);display:grid;align-items:center;padding:0 max(6vw,20px);overflow:hidden}
+.hero img{position:absolute;inset:0;opacity:.85}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(18,11,16,.92) 15%,rgba(18,11,16,.2) 70%)}
+.hero .in{position:relative;z-index:2;max-width:620px}
+.hero h1{font-size:clamp(54px,9vw,128px);letter-spacing:.06em}
+.hero h1 i{display:block;font-size:.38em;letter-spacing:.02em;color:var(--rose);margin-top:10px}
+.hero p{color:var(--mute);font-size:18px;max-width:36ch;margin:22px 0 30px}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 28px;border-radius:999px;border:1px solid var(--rose);color:var(--rose);background:transparent;text-decoration:none;font:400 14px Karla,sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.btn:hover{background:var(--rose);color:var(--night)}.btn:focus-visible{outline:2px solid var(--txt);outline-offset:3px}
+.band{padding:clamp(70px,10vw,150px) max(6vw,20px)}
+.wrap{max-width:1200px;margin:0 auto}
+.kicker{font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--rose);margin:0 0 14px}
+h2{font-size:clamp(38px,5.6vw,76px);margin-bottom:20px}
+h2 i{color:var(--mauve)}
+.lead{color:var(--mute);max-width:50ch;font-size:17px}
+/* notes pyramid */
+.pyr{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,70px);align-items:center;margin-top:30px}
+.notes{display:grid;gap:14px}
+.note{border:1px solid rgba(212,162,138,.25);padding:22px 26px;border-radius:2px;background:linear-gradient(90deg,rgba(90,42,74,.35),transparent)}
+.note:nth-child(1){margin:0 18%}.note:nth-child(2){margin:0 9%}
+.note small{display:block;font-size:11px;letter-spacing:.3em;color:var(--rose);text-transform:uppercase}
+.note b{display:block;font:400 26px "Playfair Display",serif;margin-top:4px}
+.note span{color:var(--mute);font-size:14px}
+.frame{overflow:hidden;aspect-ratio:4/5}
+/* rooms */
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin:28px 0 22px}
+.tabs button{min-height:44px;padding:0 20px;border-radius:999px;border:1px solid rgba(201,162,189,.35);background:transparent;color:var(--mute);font:400 14px Karla,sans-serif;letter-spacing:.08em;cursor:pointer;transition:all .25s}
+.tabs button[aria-selected="true"]{background:var(--plum);color:var(--txt);border-color:var(--plum)}
+.tabs button:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
+.room{position:relative;aspect-ratio:16/8;overflow:hidden;min-height:260px}
+.room img{position:absolute;inset:0;opacity:0;transition:opacity .9s ease}
+.room img.on{opacity:1}
+.room p{position:absolute;left:22px;bottom:18px;margin:0;z-index:2;font:italic 400 clamp(18px,2.2vw,26px) "Playfair Display",serif;text-shadow:0 2px 20px #000}
+.ritual{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:40px}
+.ritual figure{margin:0}.ritual .frame{aspect-ratio:4/3}
+.ritual figcaption{margin-top:12px;color:var(--mute);font-size:14px}
+.ritual figcaption b{display:block;color:var(--txt);font:400 22px "Playfair Display",serif}
+.final{position:relative;text-align:center;padding:clamp(90px,14vw,180px) 20px;overflow:hidden}
+.final img{position:absolute;inset:0;opacity:.55}
+.final::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(18,11,16,.78) 25%,rgba(18,11,16,.35) 75%)}
+.final .in{position:relative;z-index:2}
+.final h2{font-size:clamp(40px,7vw,96px)}
+footer{padding:34px max(6vw,20px);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--mute);border-top:1px solid rgba(201,162,189,.15)}
+footer b{font:400 16px "Playfair Display",serif;letter-spacing:.4em;color:var(--txt)}
+.rv{opacity:0;transform:translateY(28px)}
+@media(max-width:820px){.pyr{grid-template-columns:1fr}.ritual{grid-template-columns:1fr}.hero::after{background:linear-gradient(180deg,rgba(18,11,16,.3),rgba(18,11,16,.92) 75%)}.hero{align-items:end;padding-bottom:70px}.room{aspect-ratio:4/3}}
+@media(max-width:600px){.nav a{margin-left:12px;font-size:12px}.nav .opt{display:none}.nav b{font-size:17px;letter-spacing:.28em}.note:nth-child(1),.note:nth-child(2){margin:0}}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}*{transition:none!important}#haze{display:none}}
+</style>
+</head>
+<body>
+<canvas id="haze" aria-hidden="true"></canvas>
+<nav class="nav"><b>LAYALI</b><div><a href="#notes">Notes</a><a href="#rooms">Rooms</a><a class="opt" href="#ritual">Ritual</a></div></nav>
+
+<header class="hero">
+  <img src="img/s05.jpg" alt="Plum glass reed diffuser on a black marble nightstand beside a bed, city lights at night">
+  <div class="in">
+    <h1 id="title">LAYALI<i>the scent of long Arabian nights</i></h1>
+    <p id="sub">Damask rose, dark oud and amber, released slowly through black reeds — so your home smells of evening, all day.</p>
+    <a class="btn" id="cta" href="#notes">Discover the notes</a>
+  </div>
+</header>
+
+<main>
+<section class="band" id="notes"><div class="wrap pyr">
+  <div>
+    <p class="kicker rv">The composition</p>
+    <h2 class="rv">Three layers, <i>one night.</i></h2>
+    <p class="lead rv">Like a fine perfume, LAYALI opens bright, warms in the heart and settles deep into the room for weeks.</p>
+    <div class="notes" style="margin-top:34px">
+      <div class="note rv"><small>Top</small><b>Bergamot &amp; pink pepper</b><span>The first breath as you walk in.</span></div>
+      <div class="note rv"><small>Heart</small><b>Taif rose &amp; saffron</b><span>The warmth of the majlis after sunset.</span></div>
+      <div class="note rv"><small>Base</small><b>Oud, amber &amp; musk</b><span>What stays in the room after midnight.</span></div>
+    </div>
+  </div>
+  <div class="frame rv"><img src="img/s03.jpg" alt="Dark Damask roses and oud wood chips on black velvet with a wisp of smoke" loading="lazy"></div>
+</div></section>
+
+<section class="band" id="rooms" style="background:linear-gradient(#120b10,#1c1018)"><div class="wrap">
+  <p class="kicker rv">Every room</p>
+  <h2 class="rv">Choose where the night begins.</h2>
+  <div class="tabs rv" role="tablist" aria-label="Rooms">
+    <button role="tab" aria-selected="true" data-i="0">Entrance</button>
+    <button role="tab" aria-selected="false" data-i="1">Bedroom</button>
+    <button role="tab" aria-selected="false" data-i="2">Lounge</button>
+  </div>
+  <div class="room rv" id="room" role="tabpanel">
+    <img class="on" src="img/s02.jpg" alt="Diffuser on black marble in a dim hotel-style entrance corridor" loading="lazy">
+    <img src="img/s05.jpg" alt="Diffuser on a bedside table at night with city lights" loading="lazy">
+    <img src="img/s08.jpg" alt="Diffuser in a lounge with mauve cushions and a brass lantern at dusk" loading="lazy">
+    <p id="roomtxt">“The first thing guests notice.”</p>
+  </div>
+</div></section>
+
+<section class="band" id="ritual"><div class="wrap">
+  <p class="kicker rv">The ritual</p>
+  <h2 class="rv">Turn the reeds. <i>Let it bloom.</i></h2>
+  <div class="ritual">
+    <figure class="rv"><div class="frame"><img src="img/s06.jpg" alt="Hands in black sleeves placing black reeds into the diffuser" loading="lazy"></div><figcaption><b>Place</b>Set the black rattan reeds in the smoked-plum glass.</figcaption></figure>
+    <figure class="rv"><div class="frame"><img src="img/s04.jpg" alt="Macro of the rose-gold collar and black reeds" loading="lazy"></div><figcaption><b>Turn</b>Flip them once a week to wake the scent again.</figcaption></figure>
+    <figure class="rv"><div class="frame"><img src="img/s07.jpg" alt="Diffuser gift box open on black marble with plum satin lining" loading="lazy"></div><figcaption><b>Gift</b>Presented in plum satin, ready to give.</figcaption></figure>
+  </div>
+</div></section>
+
+<section class="final"><img src="img/s10.jpg" alt="Diffuser on black marble surrounded by soft plum mist" loading="lazy">
+  <div class="in rv"><p class="kicker">LAYALI</p><h2>Every night, <i>a little longer.</i></h2><p style="margin-top:28px"><a class="btn" href="#notes">Order the collection</a></p></div>
+</section>
+</main>
+
+<footer><b>LAYALI</b><span>Home fragrance · Concept by Lenur Studio</span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+(function(){
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,A=typeof anime!=='undefined'&&!reduce;
+  // rooms
+  var txt=["“The first thing guests notice.”","“Sleep wrapped in rose and amber.”","“Evenings that last a little longer.”"];
+  var imgs=document.querySelectorAll('#room img'),rt=document.getElementById('roomtxt');
+  document.querySelectorAll('[role=tab]').forEach(function(b){b.addEventListener('click',function(){
+    document.querySelectorAll('[role=tab]').forEach(function(x){x.setAttribute('aria-selected','false')});b.setAttribute('aria-selected','true');
+    imgs.forEach(function(im,i){im.classList.toggle('on',i==b.dataset.i)});rt.textContent=txt[b.dataset.i];
+    if(A)anime({targets:rt,opacity:[0,1],translateY:[12,0],duration:800,easing:'easeOutCubic'});
+  })});
+  if(reduce)return;
+  // scent haze
+  var c=document.getElementById('haze'),x=c.getContext('2d'),P=[],dpr=Math.min(devicePixelRatio||1,2),mx=-999,my=-999;
+  function sz(){c.width=innerWidth*dpr;c.height=innerHeight*dpr}sz();addEventListener('resize',sz);
+  addEventListener('pointermove',function(e){mx=e.clientX;my=e.clientY;for(var i=0;i<2;i++)P.push({x:mx*dpr,y:my*dpr,vx:(Math.random()-.5)*.6*dpr,vy:(-.4-Math.random()*.6)*dpr,r:(10+Math.random()*22)*dpr,a:.18})},{passive:true});
+  (function loop(){x.clearRect(0,0,c.width,c.height);P=P.filter(function(p){return p.a>.004});if(P.length>220)P.splice(0,P.length-220);
+    P.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.r*=1.012;p.a*=.975;var g=x.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r);g.addColorStop(0,'rgba(201,120,170,'+p.a+')');g.addColorStop(1,'rgba(90,42,74,0)');x.fillStyle=g;x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fill();});
+    requestAnimationFrame(loop)})();
+  if(!A){document.querySelectorAll('.rv').forEach(function(e){e.style.opacity=1;e.style.transform='none'});return;}
+  anime.timeline({easing:'easeOutExpo'})
+    .add({targets:'#title',opacity:[0,1],letterSpacing:['.4em','.06em'],duration:2200})
+    .add({targets:['#sub','#cta'],opacity:[0,1],translateY:[18,0],delay:anime.stagger(150),duration:1000},'-=1400');
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;io.unobserve(e.target);
+    var n=e.target.classList.contains('note');
+    anime({targets:e.target,opacity:[0,1],translateY:[28,0],scale:n?[.94,1]:1,duration:n?1400:1100,easing:'easeOutCubic'});})},{threshold:.15});
+  document.querySelectorAll('.rv').forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>

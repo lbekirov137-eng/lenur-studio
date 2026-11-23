@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZEPHRA eFoil</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: fast, bright, weightless — the joy of flying over water in silence
+   IDEA: the page is the waterline — headings rise above a moving waterline and sink below it as you scroll
+   PICTURE: the rider lifting off turquoise water, then a split above/below-water frame
+   COLOUR and TYPE: lagoon #0fb5b0, deep #06343a, foam #f2fbfa, lime accent #d4ff3a; Unbounded + Manrope
+   LAYOUT: compact nav, hero with animated waterline, speed/silence counters, above/below split, lagoon gallery rail, ride planner, footer */
+:root{color-scheme:light;--lagoon:#0fb5b0;--deep:#06343a;--foam:#f2fbfa;--lime:#d4ff3a;--ink:#06343a;--mute:#3f6a6d}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--foam);color:var(--ink);font:16px/1.6 Manrope,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Unbounded,system-ui,sans-serif;font-weight:700;line-height:1.02;text-wrap:balance;margin:0;letter-spacing:-.01em}
+img{display:block;width:100%;height:100%;object-fit:cover}
+.nav{position:fixed;top:12px;left:12px;right:12px;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px;border-radius:16px;background:rgba(242,251,250,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(6,52,58,.12);max-width:1240px;margin:0 auto}
+.nav b{font-family:Unbounded,sans-serif;font-size:16px;letter-spacing:.12em}
+.nav a{color:var(--mute);text-decoration:none;font-size:14px;margin-left:16px}.nav a:hover,.nav a:focus-visible{color:var(--ink)}
+.hero{position:relative;min-height:min(100svh,880px);display:grid;align-items:end;padding:0 max(5vw,16px) clamp(56px,10vh,110px);overflow:hidden;color:#fff}
+.hero img{position:absolute;inset:0;z-index:-3}
+.hero::before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,rgba(6,52,58,.05) 30%,rgba(6,52,58,.75))}
+.hero svg{position:absolute;left:0;right:0;bottom:0;width:100%;height:90px;z-index:-1}
+.hero h1{font-size:clamp(40px,8vw,104px);max-width:9ch}
+.hero h1 em{font-style:normal;color:var(--lime)}
+.hero p{max-width:40ch;margin:16px 0 24px;color:#e2f6f5;font-size:17px}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 26px;border-radius:14px;background:var(--lime);color:var(--deep);font:700 15px Manrope,sans-serif;text-decoration:none;border:0;cursor:pointer;box-shadow:0 10px 30px -10px rgba(212,255,58,.8);transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}.btn:focus-visible{outline:3px solid var(--deep);outline-offset:3px}
+.band{padding:clamp(56px,8vw,120px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+.kicker{color:var(--lagoon);font-weight:600;font-size:14px;margin:0 0 10px}
+h2{font-size:clamp(30px,4.6vw,56px);margin-bottom:16px}
+.lead{color:var(--mute);max-width:56ch;font-size:17px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:34px}
+.stat{background:#fff;border-radius:20px;padding:22px;border:1px solid rgba(6,52,58,.08);box-shadow:0 20px 40px -30px rgba(6,52,58,.5)}
+.stat b{display:block;font:700 clamp(36px,5vw,60px)/1 Unbounded,sans-serif;color:var(--deep);font-variant-numeric:tabular-nums;white-space:nowrap}
+.stat span{color:var(--mute);font-size:14px}
+/* above / below split */
+.split{position:relative;border-radius:28px;overflow:hidden;aspect-ratio:16/8;margin-top:34px;min-height:280px}
+.split img{position:absolute;inset:0}
+.split .lab{position:absolute;left:18px;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600;background:rgba(255,255,255,.85);color:var(--deep)}
+.split .up{top:16px}.split .down{bottom:16px;background:var(--deep);color:#fff}
+.split .line{position:absolute;left:0;right:0;top:50%;height:2px;background:linear-gradient(90deg,transparent,#fff,transparent);opacity:.8}
+/* rail */
+.rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 18px;margin-top:30px}
+.card{flex:0 0 min(78vw,360px);scroll-snap-align:start;border-radius:22px;overflow:hidden;aspect-ratio:3/4;position:relative;margin:0;background:var(--deep)}
+.card figcaption{position:absolute;left:16px;right:16px;bottom:14px;color:#fff;font-weight:600;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.card img{transition:transform .8s}.card:hover img{transform:scale(1.06)}
+/* planner */
+.plan{border-radius:28px;background:var(--deep);color:#e2f6f5;padding:clamp(24px,4vw,52px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.plan h2{color:#fff}.plan .ph{aspect-ratio:4/3;border-radius:18px;overflow:hidden}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 20px}
+.chip{min-height:44px;padding:0 18px;border-radius:12px;border:1px solid rgba(226,246,245,.35);background:transparent;color:#e2f6f5;font:600 15px Manrope,sans-serif;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--lime);border-color:var(--lime);color:var(--deep)}
+.note{min-height:1.4em;color:var(--lime);font-size:14px}
+.lbl{margin:0;font-size:14px;opacity:.8}
+.reveal{opacity:0;transform:translateY(40px)}
+footer{padding:40px max(5vw,16px);color:var(--mute);font-size:14px;display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between}
+.demo{font-size:13px;color:var(--mute);margin-top:14px}
+@media(max-width:760px){.stats{grid-template-columns:minmax(0,1fr)}.plan{grid-template-columns:minmax(0,1fr)}.nav a{margin-left:10px;font-size:13px}.split{aspect-ratio:4/5}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Main"><b>ZEPHRA</b><span><a href="#ride">Ride</a><a href="#gallery">Lagoon</a><a href="#book">Try it</a></span></nav>
+
+<header class="hero">
+  <img src="img/s01.jpg" alt="A rider in a full wetsuit flying above turquoise water on a white electric hydrofoil board">
+  <svg viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true"><path id="wave" fill="#f2fbfa" d=""/></svg>
+  <div>
+    <h1>Fly. <em>In silence.</em></h1>
+    <p>An electric hydrofoil that lifts you half a metre above the water. No wake, no engine roar, just wind and the lagoon below.</p>
+    <a class="btn" href="#book">Book a first flight →</a>
+  </div>
+</header>
+
+<section class="band" id="ride"><div class="wrap">
+  <p class="kicker">The ride</p>
+  <h2 class="reveal">Above the water, not on it</h2>
+  <p class="lead reveal">A thin carbon mast and wing carry the board clear of the chop. Lean forward to fly, lean back to land. Most riders stand up in their first session.</p>
+  <div class="stats reveal" id="stats"></div>
+  <div class="split reveal">
+    <img src="img/s04.jpg" alt="Board flying above the surface with the carbon mast and wing gliding under clear water">
+    <span class="line"></span><span class="lab up">Above: wind and silence</span><span class="lab down">Below: carbon wing, no wake</span>
+  </div>
+</div></section>
+
+<section class="band" id="gallery" style="padding-top:0"><div class="wrap">
+  <p class="kicker">The lagoon</p>
+  <h2 class="reveal">From sunrise to the skyline</h2>
+  <div class="rail" id="rail"></div>
+</div></section>
+
+<section class="band" id="book"><div class="wrap">
+  <div class="plan">
+    <div class="ph"><img src="img/s07.jpg" alt="Rider silhouetted against the sunset, flying above the sea" loading="lazy"></div>
+    <div>
+      <p class="kicker" style="color:var(--lime)">Try it</p>
+      <h2>Plan your first flight</h2>
+      <p class="lbl">Session</p>
+      <div class="chips" role="group" aria-label="Session" id="sess"></div>
+      <p class="lbl">Time of day</p>
+      <div class="chips" role="group" aria-label="Time" id="time"></div>
+      <button class="btn" type="button" id="req">Request a session</button>
+      <p class="note" id="note" aria-live="polite"></p>
+    </div>
+  </div>
+  <p class="demo">ZEPHRA is a sample brand created by Lenur Studio to show a product landing page; all images are AI-generated spec work.</p>
+</div></section>
+
+<footer><span>ZEPHRA — electric hydrofoil</span><span>Landing page and visuals by Lenur Studio</span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+{
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const stats=[[50,"cm","flight height above the water"],[0,"dB","engine noise you will hear"],[90,"min","ride on one charge (sample spec)"]];
+document.getElementById('stats').innerHTML=stats.map(s=>`<div class="stat"><b data-n="${s[0]}" data-u="${s[1]}">0 ${s[1]}</b><span>${s[2]}</span></div>`).join('');
+const cards=[["s03","Past the skyline"],["s05","Carving the lagoon"],["s09","Ride together"],["s06","Launch from the yacht"],["s02","Rest on the sand"],["s10","Hover at sunset"]];
+document.getElementById('rail').innerHTML=cards.map(c=>`<figure class="card"><img src="img/${c[0]}.jpg" alt="${c[1]}" loading="lazy"><figcaption>${c[1]}</figcaption></figure>`).join('');
+const sess=["Discovery, 1 h","Private lesson, 2 h","Sunset glide"],tms=["Sunrise","Midday","Sunset"];let a=sess[0],t=tms[0];
+const draw=(id,arr,cur)=>{document.getElementById(id).innerHTML=arr.map(x=>`<button type="button" class="chip" aria-pressed="${x===cur}">${x}</button>`).join('')};
+draw('sess',sess,a);draw('time',tms,t);
+document.getElementById('sess').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;a=b.textContent;draw('sess',sess,a)});
+document.getElementById('time').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;t=b.textContent;draw('time',tms,t)});
+document.getElementById('req').addEventListener('click',()=>{document.getElementById('note').textContent=`Demo page: a real launch would request "${a}" at ${t.toLowerCase()}.`});
+/* living waterline */
+const path=document.getElementById('wave');
+const wave=ts=>{let d='M0 90 L0 50 ';for(let x=0;x<=1440;x+=40){const y=46+Math.sin(x/140+ts/900)*10+Math.sin(x/60+ts/600)*4;d+=`L${x} ${y.toFixed(1)} `}d+='L1440 90 Z';path.setAttribute('d',d);if(!reduce)requestAnimationFrame(wave)};
+requestAnimationFrame(wave);
+const tick=el=>{const n=+el.dataset.n,u=el.dataset.u;if(reduce||!window.anime||n===0){el.textContent=n+' '+u;return}const o={v:0};anime({targets:o,v:n,duration:1500,easing:'easeOutExpo',update:()=>{el.textContent=Math.round(o.v)+' '+u}})};
+if(!reduce&&window.anime){
+  anime({targets:'.hero h1, .hero p, .hero .btn',opacity:[0,1],translateY:[40,0],delay:anime.stagger(160,{start:300}),duration:1000,easing:'easeOutBack'});
+  const io=new IntersectionObserver(es=>{es.forEach(en=>{if(!en.isIntersecting)return;anime({targets:en.target,opacity:[0,1],translateY:[40,0],duration:900,easing:'easeOutCubic'});en.target.querySelectorAll('[data-n]').forEach(tick);io.unobserve(en.target)})},{threshold:.2});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+}else{document.querySelectorAll('.reveal').forEach(el=>{el.style.opacity=1;el.style.transform='none'});document.querySelectorAll('[data-n]').forEach(tick)}
+}
+</script>
+</body>
+</html>

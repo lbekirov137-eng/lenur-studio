@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TANNOUR — Smart Steam Oven</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Newsreader:ital,opsz@1,6..72&display=swap" rel="stylesheet">
+<style>
+/* VOICE: warm, generous, family kitchen — tradition with a smart touch
+   IDEA: the page is the oven — turn the copper dial and the programme, temperature and dish change
+   COLOUR and TYPE: sand #e8dccb, copper #b8683a, walnut #4b2f1f, charcoal #1f1b18, cream #f7f1e8; Bricolage Grotesque + Newsreader italic */
+:root{--sand:#e8dccb;--copper:#b8683a;--walnut:#4b2f1f;--char:#1f1b18;--cream:#f7f1e8;--mute:#6e5f52}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--char);font:400 16px/1.6 "Bricolage Grotesque",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-weight:800;line-height:.95;margin:0;letter-spacing:-.03em;text-wrap:balance}
+em{font-family:Newsreader,Georgia,serif;font-style:italic;font-weight:400;letter-spacing:0;color:var(--copper)}
+img{display:block;width:100%;height:100%;object-fit:cover}
+.nav{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:30;display:flex;align-items:center;gap:22px;padding:10px 12px 10px 20px;border-radius:999px;background:rgba(247,241,232,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(75,47,31,.12);white-space:nowrap}
+.nav b{font-weight:800;letter-spacing:.12em}
+.nav a{color:var(--mute);text-decoration:none;font-size:14px}.nav a:hover{color:var(--copper)}
+.nav .cta{background:var(--copper);color:#fff;padding:8px 16px;border-radius:999px}
+.hero{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(20px,4vw,60px);align-items:center;min-height:min(100svh,900px);padding:100px max(5vw,16px) 50px}
+.hero h1{font-size:clamp(52px,8.5vw,128px)}
+.hero p{font-size:19px;color:var(--mute);max-width:34ch;margin:22px 0 30px}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 28px;border-radius:999px;background:var(--char);color:var(--cream);text-decoration:none;font:600 15px "Bricolage Grotesque",sans-serif;border:0;cursor:pointer;transition:transform .2s,background .2s}
+.btn:hover{transform:translateY(-2px);background:var(--walnut)}.btn:focus-visible{outline:3px solid var(--copper);outline-offset:3px}
+.heroimg{position:relative;border-radius:28px;overflow:hidden;aspect-ratio:16/11}
+.steam{position:absolute;bottom:40%;width:70px;height:70px;border-radius:50%;background:radial-gradient(rgba(255,255,255,.55),rgba(255,255,255,0) 70%);filter:blur(6px);pointer-events:none}
+.band{padding:clamp(70px,10vw,140px) max(5vw,16px)}
+.wrap{max-width:1220px;margin:0 auto}
+.kicker{font-size:13px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--copper);margin:0 0 12px}
+h2{font-size:clamp(40px,6vw,84px);margin-bottom:18px}
+.lead{color:var(--mute);max-width:52ch;font-size:18px}
+/* dial */
+.panel{background:var(--sand);border-radius:36px;padding:clamp(24px,4vw,54px);display:grid;grid-template-columns:auto 1fr 1.1fr;gap:clamp(20px,4vw,54px);align-items:center;margin-top:34px}
+.dialwrap{display:grid;justify-items:center;gap:16px}
+.dial{width:clamp(150px,17vw,210px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,#e9a27a,#b8683a 45%,#7c3f1e);box-shadow:0 20px 40px -18px rgba(75,47,31,.7),inset 0 2px 6px rgba(255,255,255,.4);position:relative;cursor:pointer;border:0;padding:0}
+.dial::after{content:"";position:absolute;top:10%;left:50%;width:6px;height:24%;margin-left:-3px;border-radius:3px;background:var(--cream)}
+.dial:focus-visible{outline:3px solid var(--char);outline-offset:6px}
+.modes{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.modes button{min-height:40px;padding:0 14px;border-radius:999px;border:1px solid rgba(75,47,31,.25);background:transparent;font:600 13px "Bricolage Grotesque",sans-serif;color:var(--walnut);cursor:pointer}
+.modes button[aria-pressed="true"]{background:var(--char);color:var(--cream);border-color:var(--char)}
+.readout small{display:block;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--copper);font-weight:600}
+.readout b{display:block;font-size:clamp(64px,8vw,112px);font-weight:800;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+.readout h3{font-size:clamp(26px,3vw,38px);margin:10px 0 8px}
+.readout p{color:var(--mute);margin:0}
+.dish{border-radius:24px;overflow:hidden;aspect-ratio:4/3;position:relative}
+.dish img{position:absolute;inset:0;opacity:0;transition:opacity .7s}
+.dish img.on{opacity:1}
+.bento{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:clamp(150px,17vw,230px);gap:14px;margin-top:40px}
+.bento>div{border-radius:24px;overflow:hidden;position:relative}
+.bento .t{background:var(--char);color:var(--cream);padding:26px;display:flex;flex-direction:column;justify-content:flex-end}
+.bento .t b{font-size:clamp(34px,4vw,54px);font-weight:800;line-height:1;color:var(--copper)}
+.b1{grid-column:span 3;grid-row:span 2}.b2{grid-column:span 3}.b3{grid-column:span 2}.b4{grid-column:span 1}
+.iftar{position:relative;border-radius:36px;overflow:hidden;min-height:clamp(380px,48vw,620px);display:grid;align-items:end;color:#fff}
+.iftar img{position:absolute;inset:0}
+.iftar::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(31,27,24,.15),rgba(31,27,24,.9) 55%);z-index:1}
+.iftar .in{position:relative;z-index:2;padding:clamp(24px,4vw,56px)}
+.iftar h2{color:#fff}.iftar p{color:#eadfd2;max-width:46ch;font-size:18px}
+footer{padding:36px max(5vw,16px);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:var(--mute);font-size:14px}
+footer b{color:var(--char);letter-spacing:.12em}
+.rv{opacity:0;transform:translateY(30px)}
+@media(max-width:960px){.hero{grid-template-columns:1fr;padding-top:96px}.panel{grid-template-columns:1fr;text-align:center}.readout p{margin:0 auto;max-width:40ch}.bento{grid-template-columns:1fr 1fr}.b1,.b2{grid-column:span 2}.b3{grid-column:span 1}.b4{grid-column:span 1}}
+@media(max-width:600px){.nav{gap:14px;padding:8px 8px 8px 16px}.nav .opt{display:none}.nav a{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}*{transition:none!important}.steam{display:none}}
+</style>
+</head>
+<body>
+<nav class="nav"><b>TANNOUR</b><a href="#dial">Programmes</a><a class="opt" href="#home">At home</a><a class="cta" href="#iftar">Order</a></nav>
+
+<header class="hero">
+  <div>
+    <h1 id="title">The oven that <em>remembers</em> grandma's recipes.</h1>
+    <p id="sub">A smart steam oven in sand and copper: bread that rises, ouzi that stays tender, khubz with a golden crust — one dial.</p>
+    <a class="btn" id="cta" href="#dial">Turn the dial →</a>
+  </div>
+  <div class="heroimg" id="heroimg"><img src="img/s01.jpg" alt="Steam bursting from an opened oven door in a dark kitchen, golden backlight"><span class="steam" style="left:30%"></span><span class="steam" style="left:45%"></span><span class="steam" style="left:60%"></span></div>
+</header>
+
+<main>
+<section class="band" id="dial" style="padding-top:20px"><div class="wrap">
+  <p class="kicker rv">Programmes</p>
+  <h2 class="rv">One copper dial. <em>Every dish.</em></h2>
+  <div class="panel rv">
+    <div class="dialwrap">
+      <button class="dial" id="dialbtn" aria-label="Turn the dial to the next programme"></button>
+      <div class="modes" role="group" aria-label="Programme">
+        <button data-m="0" aria-pressed="true">Bake</button><button data-m="1" aria-pressed="false">Roast</button><button data-m="2" aria-pressed="false">Steam</button>
+      </div>
+    </div>
+    <div class="readout" aria-live="polite">
+      <small id="mname">Bake</small>
+      <b><span id="temp">220</span>°</b>
+      <h3 id="mtitle">Bread that rises</h3>
+      <p id="mtext">Steam in the first minutes, dry heat at the end — a soft crumb and a crackling crust.</p>
+    </div>
+    <div class="dish">
+      <img class="on" src="img/s05.jpg" alt="Fresh bread rising behind the dark glass oven door" loading="lazy">
+      <img src="img/s03.jpg" alt="Golden roasted lamb ouzi on rice with nuts on a copper platter" loading="lazy">
+      <img src="img/s10.jpg" alt="Steam rising gently from the oven in a warm kitchen" loading="lazy">
+    </div>
+  </div>
+</div></section>
+
+<section class="band" id="home"><div class="wrap">
+  <p class="kicker rv">At home</p>
+  <h2 class="rv">Made to stay on the counter.</h2>
+  <div class="bento">
+    <div class="b1 rv"><img src="img/s02.jpg" alt="Sand-coloured steam oven with copper dials on a walnut counter" loading="lazy"></div>
+    <div class="b2 rv"><img src="img/s06.jpg" alt="Hands sliding a tray of khubz bread into the oven" loading="lazy"></div>
+    <div class="b3 rv"><img src="img/s04.jpg" alt="Macro of the brushed copper control dial" loading="lazy"></div>
+    <div class="b4 t rv"><b data-n="12">0</b><span>programmes, from khubz to fish</span></div>
+  </div>
+</div></section>
+
+<section class="band" id="iftar" style="padding-top:0"><div class="wrap">
+  <div class="iftar rv"><img src="img/s08.jpg" alt="Family iftar table with dishes, dates and lanterns at dusk" loading="lazy">
+    <div class="in"><p class="kicker" style="color:#f0b28c">For the table</p><h2>Ready when <em style="color:#f0b28c">the sun sets.</em></h2><p>Set the time in the morning; TANNOUR starts on its own and keeps everything warm until the family sits down.</p>
+      <p style="margin-top:22px"><a class="btn" style="background:var(--copper)" href="#dial">Order TANNOUR</a></p></div>
+  </div>
+</div></section>
+</main>
+
+<footer><b>TANNOUR</b><span>Smart steam oven · Concept by Lenur Studio</span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+(function(){
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,A=typeof anime!=='undefined'&&!reduce;
+  var M=[{n:'Bake',t:220,h:'Bread that rises',p:'Steam in the first minutes, dry heat at the end — a soft crumb and a crackling crust.'},
+         {n:'Roast',t:180,h:'Ouzi that stays tender',p:'Slow roast with gentle moisture keeps lamb juicy and the rice fragrant.'},
+         {n:'Steam',t:100,h:'Fish and vegetables, pure',p:'Pure steam cooks gently and keeps colour, vitamins and taste.'}];
+  var cur=0,angle=0,dial=document.getElementById('dialbtn'),temp=document.getElementById('temp'),imgs=document.querySelectorAll('.dish img');
+  function set(i){
+    if(i===cur)return;var old=M[cur].t;cur=i;angle=[0,120,240][i];
+    document.querySelectorAll('.modes button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.m==i?'true':'false')});
+    document.getElementById('mname').textContent=M[i].n;document.getElementById('mtitle').textContent=M[i].h;document.getElementById('mtext').textContent=M[i].p;
+    imgs.forEach(function(im,k){im.classList.toggle('on',k===i)});
+    if(A){anime({targets:dial,rotate:angle,duration:700,easing:'easeOutBack'});var o={v:old};anime({targets:o,v:M[i].t,round:1,duration:800,easing:'easeOutQuart',update:function(){temp.textContent=o.v}});
+      anime({targets:['#mtitle','#mtext'],opacity:[0,1],translateY:[10,0],delay:anime.stagger(80),duration:600,easing:'easeOutCubic'});}
+    else{dial.style.transform='rotate('+angle+'deg)';temp.textContent=M[i].t;}
+  }
+  dial.addEventListener('click',function(){set((cur+1)%3)});
+  document.querySelectorAll('.modes button').forEach(function(b){b.addEventListener('click',function(){set(+b.dataset.m)})});
+  if(!A){document.querySelectorAll('.rv').forEach(function(e){e.style.opacity=1;e.style.transform='none'});document.querySelectorAll('[data-n]').forEach(function(b){b.textContent=b.dataset.n});return;}
+  anime({targets:'.steam',translateY:[0,-160],scale:[.6,2.2],opacity:[0,.9,0],duration:3200,delay:anime.stagger(900),loop:true,easing:'easeOutSine'});
+  anime.timeline({easing:'easeOutExpo'})
+    .add({targets:'#title',opacity:[0,1],translateY:[40,0],duration:1300})
+    .add({targets:['#sub','#cta'],opacity:[0,1],translateY:[18,0],delay:anime.stagger(120),duration:900},'-=800')
+    .add({targets:'#heroimg',opacity:[0,1],scale:[.94,1],duration:1400},'-=1100');
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;io.unobserve(e.target);
+    anime({targets:e.target,opacity:[0,1],translateY:[30,0],duration:1100,easing:'easeOutCubic'});
+    e.target.querySelectorAll('[data-n]').forEach(function(b){var o={v:0};anime({targets:o,v:+b.dataset.n,round:1,duration:1600,easing:'easeOutQuart',update:function(){b.textContent=o.v}})});
+    if(e.target.classList.contains('panel'))anime({targets:dial,rotate:[-140,0],duration:1400,easing:'easeOutElastic(1,.6)'});
+  })},{threshold:.15});
+  document.querySelectorAll('.rv').forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>

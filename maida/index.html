@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MAIDA — Travertine &amp; Walnut Dining Table</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: architectural, generous, warm — the table where a family gathers
+   IDEA: the visitor sets the table — choose a length and the oval stretches, chairs slide into place
+   COLOUR and TYPE: travertine #ebe2d3, walnut #4a2e1e, bronze #a67c4e, charcoal #1d1a17; Fraunces + Archivo */
+:root{--trav:#ebe2d3;--walnut:#4a2e1e;--bronze:#a67c4e;--char:#1d1a17;--mute:#6f6152}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--trav);color:var(--char);font:400 16px/1.65 Archivo,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:300;line-height:1;margin:0;text-wrap:balance;letter-spacing:-.02em}
+img{display:block;width:100%;height:100%;object-fit:cover}
+.nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:18px max(5vw,16px);background:linear-gradient(rgba(235,226,211,.92),rgba(235,226,211,0));}
+.nav b{font:500 15px Archivo,sans-serif;letter-spacing:.45em}
+.nav a{color:var(--char);text-decoration:none;font-size:14px;margin-left:22px;border-bottom:1px solid transparent}.nav a:hover{border-color:var(--bronze)}
+.hero{padding:120px max(5vw,16px) 0}
+.hero h1{font-size:clamp(56px,11vw,170px);font-weight:300}
+.hero h1>*{display:inline-block}
+.hero h1 em{font-style:italic;color:var(--bronze)}
+.hero .row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin:18px 0 28px}
+.hero p{max-width:40ch;color:var(--mute);font-size:17px;margin:0}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 26px;background:var(--char);color:var(--trav);text-decoration:none;font:500 14px Archivo,sans-serif;letter-spacing:.08em;border:0;cursor:pointer;transition:background .25s}
+.btn:hover{background:var(--walnut)}.btn:focus-visible{outline:2px solid var(--bronze);outline-offset:3px}
+.hero .wide{height:min(72vh,720px);overflow:hidden}
+.hero .wide img{transform-origin:center 60%}
+.band{padding:clamp(70px,10vw,150px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+.kicker{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--bronze);margin:0 0 14px;font-weight:600}
+h2{font-size:clamp(40px,6vw,84px);margin-bottom:20px}
+.lead{color:var(--mute);max-width:52ch;font-size:17px}
+.mat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:44px}
+.mat figure{margin:0}.mat .f{aspect-ratio:3/4;overflow:hidden}
+.mat figcaption{padding-top:14px;font-size:14px;color:var(--mute)}
+.mat figcaption b{display:block;font:300 26px Fraunces,serif;color:var(--char)}
+/* configurator */
+.dark{background:var(--char);color:var(--trav)}
+.dark .lead{color:#b9ab98}
+.cfg{display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(24px,5vw,70px);align-items:center;margin-top:30px}
+.stage{background:#26221e;aspect-ratio:16/10;display:grid;place-items:center;border:1px solid rgba(166,124,78,.25)}
+.stage svg{width:92%;height:auto;overflow:visible}
+.opts{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}
+.opts button{min-height:46px;padding:0 20px;background:transparent;color:var(--trav);border:1px solid rgba(235,226,211,.35);font:500 14px Archivo,sans-serif;cursor:pointer;transition:all .2s}
+.opts button[aria-pressed="true"]{background:var(--bronze);border-color:var(--bronze);color:var(--char)}
+.opts button:focus-visible{outline:2px solid var(--trav);outline-offset:2px}
+.seat b{font:300 clamp(64px,9vw,120px)/1 Fraunces,serif;color:var(--bronze);font-variant-numeric:tabular-nums}
+.seat span{display:block;color:#b9ab98}
+.gal{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px;margin-top:44px}
+.gal div{overflow:hidden}
+.g1{grid-column:span 7;aspect-ratio:16/10}.g2{grid-column:span 5;aspect-ratio:4/5}.g3{grid-column:span 5;aspect-ratio:4/5}.g4{grid-column:span 7;aspect-ratio:16/10}
+.gal img{transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}.gal div:hover img{transform:scale(1.04)}
+.cap{font-size:13px;color:var(--mute);margin-top:8px}
+.final{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,70px);align-items:center}
+.final .f{aspect-ratio:4/3;overflow:hidden}
+footer{padding:36px max(5vw,16px);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--mute);border-top:1px solid rgba(29,26,23,.12)}
+footer b{letter-spacing:.45em;color:var(--char);font-weight:500}
+.rv{opacity:0;transform:translateY(30px)}
+@media(max-width:820px){.mat{grid-template-columns:1fr}.mat .f{aspect-ratio:16/10}.cfg,.final{grid-template-columns:1fr}.gal{grid-template-columns:1fr}.g1,.g2,.g3,.g4{grid-column:auto;aspect-ratio:16/10}}
+@media(max-width:600px){.nav a{margin-left:14px;font-size:13px}.nav .opt{display:none}.nav b{letter-spacing:.3em}}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav class="nav"><b>MAIDA</b><div><a href="#material">Material</a><a href="#set">Set the table</a><a class="opt" href="#rooms">Rooms</a></div></nav>
+
+<header class="hero">
+  <h1 id="title"><span>Where the</span> <em>family</em><br><span>gathers.</span></h1>
+  <div class="row">
+    <p id="sub">A long oval table: honed travertine resting on a sculpted walnut pedestal, joined by a thin line of bronze.</p>
+    <a class="btn" id="cta" href="#set">Set your table →</a>
+  </div>
+  <div class="wide"><img id="heroimg" src="img/s05.jpg" alt="Travertine oval dining table set for dinner with candles and dark leather chairs"></div>
+</header>
+
+<main>
+<section class="band" id="material"><div class="wrap">
+  <p class="kicker rv">Material</p>
+  <h2 class="rv">Stone, wood, bronze.<br>Nothing else.</h2>
+  <p class="lead rv">Each top is cut from a single block of cream travertine, honed by hand. The pedestal is carved from solid walnut and inlaid with a bronze line that catches the evening light.</p>
+  <div class="mat">
+    <figure class="rv"><div class="f"><img src="img/s08.jpg" alt="Open-air travertine quarry at sunrise with large cut blocks" loading="lazy"></div><figcaption><b>Travertine</b>Quarried in blocks, never in thin slabs.</figcaption></figure>
+    <figure class="rv"><div class="f"><img src="img/s01.jpg" alt="Chisel carving walnut, shavings curling in warm light" loading="lazy"></div><figcaption><b>Walnut</b>Carved by hand into one flowing pedestal.</figcaption></figure>
+    <figure class="rv"><div class="f"><img src="img/s03.jpg" alt="Macro of travertine grain and the thin bronze inlay along the edge" loading="lazy"></div><figcaption><b>Bronze</b>A single inlaid line where stone meets wood.</figcaption></figure>
+  </div>
+</div></section>
+
+<section class="band dark" id="set"><div class="wrap">
+  <p class="kicker rv">Set the table</p>
+  <h2 class="rv">Choose the length. We'll do the rest.</h2>
+  <div class="cfg">
+    <div class="stage rv">
+      <svg viewBox="0 0 600 340" role="img" aria-label="Top view of the oval table with chairs around it">
+        <g id="chairs"></g>
+        <ellipse id="top" cx="300" cy="170" rx="170" ry="78" fill="#d9ccb6" stroke="#a67c4e" stroke-width="2"/>
+        <ellipse cx="300" cy="170" rx="40" ry="18" fill="none" stroke="#a67c4e" stroke-opacity=".5" stroke-dasharray="4 5"/>
+      </svg>
+    </div>
+    <div class="rv">
+      <div class="opts" role="group" aria-label="Table length">
+        <button type="button" data-l="240" data-s="8" aria-pressed="false">2.4 m</button>
+        <button type="button" data-l="300" data-s="10" aria-pressed="true">3.0 m</button>
+        <button type="button" data-l="360" data-s="12" aria-pressed="false">3.6 m</button>
+      </div>
+      <div class="seat"><b id="seats">10</b><span>guests around one table</span></div>
+      <p class="lead" style="margin-top:18px">Made to order in three lengths. Every table is signed underneath by the craftsmen who made it.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="band" id="rooms"><div class="wrap">
+  <p class="kicker rv">In the room</p>
+  <h2 class="rv">At home anywhere light falls.</h2>
+  <div class="gal">
+    <div class="g1 rv"><img src="img/s02.jpg" alt="The table in a tall arched dining hall with chairs and flowers" loading="lazy"></div>
+    <div class="g2 rv"><img src="img/s06.jpg" alt="Overhead view of the table laid with many small dishes" loading="lazy"></div>
+    <div class="g3 rv"><img src="img/s04.jpg" alt="Hands polishing a travertine slab in the workshop" loading="lazy"></div>
+    <div class="g4 rv"><img src="img/s09.jpg" alt="The table in front of a sea-view window with flowing white curtains" loading="lazy"></div>
+  </div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap final">
+  <div class="f rv"><img src="img/s10.jpg" alt="The table alone under a bronze pendant lamp" loading="lazy"></div>
+  <div class="rv">
+    <p class="kicker">Private viewing</p>
+    <h2>See it in stone, not on a screen.</h2>
+    <p class="lead">Visit our gallery or invite us to your home with stone and walnut samples.</p>
+    <p style="margin-top:26px"><a class="btn" href="#set">Book a viewing →</a></p>
+  </div>
+</div></section>
+</main>
+
+<footer><b>MAIDA</b><span>Travertine &amp; walnut dining · Concept by Lenur Studio</span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+(function(){
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,A=typeof anime!=='undefined'&&!reduce;
+  var NS='http://www.w3.org/2000/svg',chairs=document.getElementById('chairs'),top=document.getElementById('top'),seatsEl=document.getElementById('seats');
+  var state={rx:170,seats:10};
+  function layout(rx,n,animate){
+    chairs.innerHTML='';var side=(n-2)/2,ry=78;
+    var pos=[[300-rx-26,170,90],[300+rx+26,170,90]];
+    for(var i=0;i<side;i++){var x=300-rx*.78+(rx*1.56)*(side===1?.5:i/(side-1));pos.push([x,170-ry-24,0]);pos.push([x,170+ry+24,0]);}
+    pos.forEach(function(p,k){var r=document.createElementNS(NS,'rect');r.setAttribute('width',34);r.setAttribute('height',26);r.setAttribute('rx',6);r.setAttribute('fill','#4a2e1e');r.setAttribute('stroke','#a67c4e');r.setAttribute('stroke-opacity','.6');
+      r.setAttribute('transform','translate('+(p[0]-17)+','+(p[1]-13)+') rotate('+p[2]+' 17 13)');chairs.appendChild(r);});
+    if(animate&&A)anime({targets:chairs.querySelectorAll('rect'),opacity:[0,1],scale:[.4,1],delay:anime.stagger(40),duration:600,easing:'easeOutBack'});
+  }
+  layout(170,10,false);
+  document.querySelectorAll('.opts button').forEach(function(b){b.addEventListener('click',function(){
+    document.querySelectorAll('.opts button').forEach(function(x){x.setAttribute('aria-pressed','false')});b.setAttribute('aria-pressed','true');
+    var rx=+b.dataset.l*170/300,n=+b.dataset.s;
+    if(A){anime({targets:top,rx:rx,duration:700,easing:'easeInOutCubic'});var o={v:state.seats};anime({targets:o,v:n,round:1,duration:700,easing:'easeOutQuad',update:function(){seatsEl.textContent=o.v}});}
+    else{top.setAttribute('rx',rx);seatsEl.textContent=n;}
+    state.seats=n;layout(rx,n,true);
+  })});
+  if(!A){document.querySelectorAll('.rv').forEach(function(e){e.style.opacity=1;e.style.transform='none'});return;}
+  anime.timeline({easing:'easeOutExpo'})
+    .add({targets:'#title > *',translateY:[60,0],opacity:[0,1],delay:anime.stagger(120),duration:1400})
+    .add({targets:['#sub','#cta'],opacity:[0,1],translateY:[16,0],delay:anime.stagger(120),duration:900},'-=900')
+    .add({targets:'#heroimg',scale:[1.15,1],opacity:[0,1],duration:2000},'-=1200');
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;io.unobserve(e.target);anime({targets:e.target,opacity:[0,1],translateY:[30,0],duration:1100,easing:'easeOutCubic'});})},{threshold:.12});
+  document.querySelectorAll('.rv').forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>

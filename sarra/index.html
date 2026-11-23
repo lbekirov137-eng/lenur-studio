@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SARRA — Sunglasses for the Gulf Sun</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* VOICE: bold, sunny, fashion-editorial — confident under the Gulf sun
+   IDEA: look through the lens — a pair of tinted lenses follows your cursor/finger across the bright desert hero
+   COLOUR and TYPE: sand #f2e5cd, tortoise #5b3416, amber #d98b2b, ink #17120d; Syne + Space Grotesk */
+:root{--sand:#f2e5cd;--tort:#5b3416;--amber:#d98b2b;--ink:#17120d;--mute:#6f5c48}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--sand);color:var(--ink);font:400 16px/1.6 "Space Grotesk",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Syne,system-ui,sans-serif;font-weight:800;line-height:.9;margin:0;letter-spacing:-.03em;text-transform:uppercase}
+img{display:block;width:100%;height:100%;object-fit:cover}
+.nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:16px max(4vw,16px);mix-blend-mode:difference;color:#fff}
+.nav b{font:800 22px Syne,sans-serif;letter-spacing:.08em}
+.nav a{color:#fff;text-decoration:none;font-size:14px;margin-left:20px;text-transform:uppercase;letter-spacing:.08em}
+.hero{position:relative;height:min(100svh,900px);min-height:560px;overflow:hidden;cursor:none;touch-action:pan-y}
+.hero .base,.hero .tint{position:absolute;inset:0}
+.hero .base img{filter:brightness(1.12) saturate(.9)}
+.hero .tint{clip-path:circle(0 at 50% 50%)}
+.hero .tint img{filter:sepia(.55) saturate(1.5) brightness(.62) contrast(1.15) hue-rotate(-12deg)}
+.hero h1{position:absolute;left:max(4vw,16px);bottom:clamp(30px,7vh,80px);font-size:clamp(70px,17vw,260px);color:var(--ink);mix-blend-mode:multiply;pointer-events:none}
+.hero .tag{position:absolute;right:max(4vw,16px);bottom:clamp(40px,8vh,90px);max-width:26ch;font-size:16px;color:var(--ink);background:rgba(242,229,205,.85);padding:14px 16px;pointer-events:none}
+.frames{position:absolute;pointer-events:none;width:min(46vw,440px);height:auto;left:0;top:0;transform:translate(-50%,-50%);opacity:0;transition:opacity .3s}
+.hint{position:absolute;top:84px;left:max(4vw,16px);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);background:var(--sand);padding:6px 10px}
+.marq{background:var(--ink);color:var(--sand);overflow:hidden;white-space:nowrap;padding:16px 0}
+.marq div{display:inline-block;font:800 clamp(22px,3vw,38px) Syne,sans-serif;text-transform:uppercase;letter-spacing:.02em}
+.marq span{color:var(--amber);margin:0 22px}
+.band{padding:clamp(70px,10vw,140px) max(4vw,16px)}
+.wrap{max-width:1280px;margin:0 auto}
+.kicker{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--tort);margin:0 0 12px;font-weight:500}
+h2{font-size:clamp(46px,8vw,120px);margin-bottom:18px}
+h2 i{font-style:normal;color:var(--amber)}
+.lead{color:var(--mute);max-width:46ch;font-size:18px}
+.ed{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px;margin-top:40px;align-items:start}
+.ed div{overflow:hidden}
+.e1{grid-column:1/8;aspect-ratio:16/11}.e2{grid-column:8/13;aspect-ratio:4/5;margin-top:80px}.e3{grid-column:2/7;aspect-ratio:4/5;margin-top:-60px}.e4{grid-column:7/13;aspect-ratio:16/11}
+.ed img{transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}.ed div:hover img{transform:scale(1.05)}
+.specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;background:var(--ink);margin-top:50px}
+.spec{background:var(--sand);padding:28px 24px}
+.spec b{display:block;font:800 clamp(40px,5vw,72px)/1 Syne,sans-serif;color:var(--tort);font-variant-numeric:tabular-nums}
+.spec span{color:var(--mute)}
+.cw{display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(24px,5vw,60px);align-items:center}
+.cw .img{aspect-ratio:16/10;overflow:hidden}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 28px;background:var(--ink);color:var(--sand);text-decoration:none;font:700 15px Syne,sans-serif;letter-spacing:.06em;text-transform:uppercase;transition:background .2s}
+.btn:hover{background:var(--tort)}.btn:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+.final{position:relative;height:min(80vh,720px);overflow:hidden;display:grid;place-items:center;text-align:center}
+.final img{position:absolute;inset:0}
+.final::after{content:"";position:absolute;inset:0;background:rgba(23,18,13,.45)}
+.final h2{z-index:2;position:relative;color:var(--sand);text-shadow:0 4px 40px rgba(0,0,0,.5)}
+footer{padding:30px max(4vw,16px);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:14px;color:var(--mute)}
+footer b{font:800 18px Syne,sans-serif;color:var(--ink);letter-spacing:.08em}
+.rv{opacity:0;transform:translateY(30px)}
+@media(max-width:820px){.ed{grid-template-columns:1fr}.e1,.e2,.e3,.e4{grid-column:auto;margin:0;aspect-ratio:16/11}.cw{grid-template-columns:1fr}.specs{grid-template-columns:1fr}.hero .tag{left:16px;right:16px;bottom:auto;top:130px;max-width:none}}
+@media(max-width:600px){.nav a{margin-left:12px;font-size:12px}.nav .opt{display:none}}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav class="nav"><b>SARRA</b><div><a href="#edit">The edit</a><a class="opt" href="#craft">Craft</a><a href="#shop">Shop</a></div></nav>
+
+<header class="hero" id="hero">
+  <div class="base"><img src="img/s02.jpg" alt="Tortoiseshell sunglasses resting on a sunlit desert dune"></div>
+  <div class="tint" id="tint" aria-hidden="true"><img src="img/s02.jpg" alt=""></div>
+  <svg class="frames" id="frames" viewBox="0 0 440 170" aria-hidden="true"><g fill="none" stroke="#5b3416" stroke-width="14"><rect x="10" y="12" width="180" height="140" rx="46"/><rect x="250" y="12" width="180" height="140" rx="46"/><path d="M190 60 Q220 40 250 60"/></g></svg>
+  <span class="hint" id="hint">Move to look through the lenses</span>
+  <p class="tag" id="tag">Oversized amber tortoiseshell. Thin gold temples. Made for the brightest sun on earth.</p>
+  <h1 id="title">SARRA</h1>
+</header>
+
+<div class="marq" aria-hidden="true"><div id="mq">Amber tortoise <span>✦</span> Gradient lenses <span>✦</span> Gold temples <span>✦</span> 100% UV400 <span>✦</span> Handmade acetate <span>✦</span> Amber tortoise <span>✦</span> Gradient lenses <span>✦</span> Gold temples <span>✦</span> 100% UV400 <span>✦</span> Handmade acetate <span>✦</span></div></div>
+
+<main>
+<section class="band" id="edit"><div class="wrap">
+  <p class="kicker rv">The edit</p>
+  <h2 class="rv">From the dunes <i>to the marina.</i></h2>
+  <div class="ed">
+    <div class="e1 rv"><img src="img/s04.jpg" alt="Woman in a black abaya and shayla seen from behind holding the sunglasses up to the desert" loading="lazy"></div>
+    <div class="e2 rv"><img src="img/s05.jpg" alt="Sunglasses on a car dashboard with the sea and dunes beyond" loading="lazy"></div>
+    <div class="e3 rv"><img src="img/s06.jpg" alt="Sunglasses on a leather case beside an espresso on marble" loading="lazy"></div>
+    <div class="e4 rv"><img src="img/s08.jpg" alt="Sunglasses reflected in a still pool under palm shadows" loading="lazy"></div>
+  </div>
+</div></section>
+
+<section class="band" id="craft" style="padding-top:0"><div class="wrap cw">
+  <div class="img rv"><img src="img/s01.jpg" alt="Desert sun reflected as a blazing disc in the dark lenses" loading="lazy"></div>
+  <div class="rv">
+    <p class="kicker">Craft</p>
+    <h2 style="font-size:clamp(40px,5.4vw,80px)">The sun, <i>tamed.</i></h2>
+    <p class="lead">Each frame is cut from a single block of amber acetate, polished by hand for three days, and fitted with gradient lenses that soften the noon glare without dulling the colours of the desert.</p>
+  </div>
+</div>
+<div class="wrap"><div class="specs">
+  <div class="spec rv"><b data-n="400">0</b><span>UV protection rating</span></div>
+  <div class="spec rv"><b data-n="72">0</b><span>hours of hand polishing</span></div>
+  <div class="spec rv"><b data-n="3">0</b><span>colourways: amber, onyx, ivory</span></div>
+</div></div></section>
+
+<section class="band" id="shop" style="padding-top:0"><div class="wrap cw">
+  <div class="rv">
+    <p class="kicker">Colourways</p>
+    <h2 style="font-size:clamp(40px,5.4vw,80px)">Pick your <i>shade.</i></h2>
+    <p class="lead">Amber tortoise for the desert, onyx black for the city, ivory tortoise for the sea.</p>
+    <p style="margin-top:26px"><a class="btn" href="#edit">Shop SARRA →</a></p>
+  </div>
+  <div class="img rv"><img src="img/s09.jpg" alt="Three colourways of the sunglasses on stone blocks in the sand" loading="lazy"></div>
+</div></section>
+
+<section class="final"><img src="img/s10.jpg" alt="Sunglasses half-buried in a dune with sand blowing" loading="lazy"><h2 class="rv">Own <i>the sun.</i></h2></section>
+</main>
+
+<footer><b>SARRA</b><span>Sunglasses · Concept by Lenur Studio</span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+(function(){
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,A=typeof anime!=='undefined'&&!reduce;
+  var hero=document.getElementById('hero'),tint=document.getElementById('tint'),fr=document.getElementById('frames'),hint=document.getElementById('hint');
+  var tx=0,ty=0,cx=0,cy=0,active=false;
+  function size(){return Math.min(innerWidth*.46,440)}
+  function place(x,y){tx=x;ty=y;if(!active){active=true;cx=x;cy=y;fr.style.opacity=1;hint.style.opacity=0}}
+  hero.addEventListener('pointermove',function(e){var b=hero.getBoundingClientRect();place(e.clientX-b.left,e.clientY-b.top)});
+  hero.addEventListener('pointerleave',function(){active=false;fr.style.opacity=0;tint.style.clipPath='circle(0 at 50% 50%)'});
+  function loop(){if(active){cx+=(tx-cx)*.18;cy+=(ty-cy)*.18;var w=size(),r=w*.21,off=w*.27;
+      tint.style.clipPath='path("'+circ(cx-off,cy,r)+circ(cx+off,cy,r)+'")';
+      fr.style.left=cx+'px';fr.style.top=cy+'px';}
+    requestAnimationFrame(loop)}
+  function circ(x,y,r){return 'M'+(x-r)+' '+y+' a'+r+' '+r+' 0 1 0 '+(2*r)+' 0 a'+r+' '+r+' 0 1 0 '+(-2*r)+' 0 '}
+  loop();
+  // demo sweep before the user interacts
+  if(!reduce){var t0=performance.now();(function demo(t){if(active&&hero.matches(':hover'))return;var k=(t-t0)/1000;if(k>4.5){if(!hero.matches(':hover')){active=false;fr.style.opacity=0;tint.style.clipPath='circle(0 at 50% 50%)';hint.style.opacity=1}return}
+    var b=hero.getBoundingClientRect();place(b.width*(.3+.4*Math.sin(k*.9)),b.height*.42);requestAnimationFrame(demo)})(t0+600);}
+  if(!A){document.querySelectorAll('.rv').forEach(function(e){e.style.opacity=1;e.style.transform='none'});document.querySelectorAll('[data-n]').forEach(function(b){b.textContent=b.dataset.n});return;}
+  anime({targets:'#mq',translateX:['0%','-50%'],duration:26000,easing:'linear',loop:true});
+  anime.timeline({easing:'easeOutExpo'})
+    .add({targets:'#title',translateY:[120,0],opacity:[0,1],duration:1500})
+    .add({targets:'#tag',opacity:[0,1],translateX:[30,0],duration:1000},'-=900');
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;io.unobserve(e.target);
+    anime({targets:e.target,opacity:[0,1],translateY:[30,0],duration:1000,easing:'easeOutCubic'});
+    e.target.querySelectorAll('[data-n]').forEach(function(b){var o={v:0};anime({targets:o,v:+b.dataset.n,round:1,duration:1600,easing:'easeOutQuart',update:function(){b.textContent=o.v}})});
+  })},{threshold:.15});
+  document.querySelectorAll('.rv').forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>

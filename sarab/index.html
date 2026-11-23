@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SARAB Desert Resort</title>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* VOICE: slow, warm, quiet — a day in the dunes
+   IDEA: the page is one desert day: scrolling moves the sky from dawn gold through noon to violet dusk and starry night
+   PICTURE: the dawn drone reveal of the villas, then a horizontal day-timeline of moments
+   COLOUR and TYPE: dune #d9a066, sand #f3e5cf, palm #2f5d4e, dusk violet #3b2a4f, night #120e1f; Marcellus + Outfit
+   LAYOUT: floating pill nav, hero, intro, day timeline (snap scroll), villa bento, stay planner, night footer */
+:root{color-scheme:light;--sand:#f3e5cf;--dune:#d9a066;--palm:#2f5d4e;--violet:#3b2a4f;--night:#120e1f;--ink:#2a2118;--sky:#f7d9a8}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font:300 17px/1.7 Outfit,system-ui,sans-serif;overflow-x:clip;background:var(--sky);transition:background-color .2s linear}
+h1,h2,h3{font-family:Marcellus,Georgia,serif;font-weight:400;line-height:1.08;text-wrap:balance;margin:0}
+img{display:block;width:100%;height:100%;object-fit:cover}
+.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:20px;align-items:center;padding:10px 22px;border-radius:999px;background:rgba(243,229,207,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(217,160,102,.45);flex-wrap:wrap;justify-content:center;max-width:calc(100vw - 24px)}
+.nav b{font-family:Marcellus,serif;letter-spacing:.3em;font-weight:400;color:var(--violet)}
+.nav a{color:#5b4a3a;text-decoration:none;font-size:15px}.nav a:hover,.nav a:focus-visible{color:var(--violet)}
+.clock{position:fixed;left:max(14px,2vw);bottom:18px;z-index:15;font-size:14px;padding:6px 14px;border-radius:999px;background:rgba(18,14,31,.55);color:#f3e5cf;font-variant-numeric:tabular-nums;backdrop-filter:blur(8px)}
+.hero{position:relative;min-height:min(100svh,900px);display:grid;align-items:end;padding:0 max(5vw,16px) clamp(40px,8vh,90px);overflow:hidden}
+.hero img{position:absolute;inset:0;z-index:-2;transform-origin:50% 30%;animation:rise 18s ease-out forwards}
+@keyframes rise{from{transform:scale(1.18) translateY(4%)}to{transform:scale(1) translateY(0)}}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(18,14,31,0) 40%,rgba(18,14,31,.75))}
+.hero h1{font-size:clamp(44px,7.5vw,96px);color:#fff7ea;max-width:12ch}
+.hero h1 .w{display:inline-block;opacity:0;transform:translateY(.5em) rotate(2deg)}
+.hero p{color:#f3e5cf;max-width:44ch;margin:16px 0 26px}
+.btn{position:relative;display:inline-flex;align-items:center;min-height:48px;padding:0 28px;border-radius:999px;background:var(--dune);color:#2a1a0c;border:0;text-decoration:none;font:500 15px Outfit,sans-serif;cursor:pointer;overflow:hidden}
+.btn::before{content:"";position:absolute;inset:0;background:radial-gradient(120px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.6),transparent 60%);opacity:0;transition:opacity .3s}
+.btn:hover::before{opacity:1}.btn:focus-visible{outline:2px solid var(--violet);outline-offset:3px}
+.band{padding:clamp(56px,8vw,120px) max(5vw,16px)}
+.wrap{max-width:1200px;margin:0 auto}
+.kicker{color:var(--palm);font-size:14px;letter-spacing:.06em;margin:0 0 10px}
+h2{font-size:clamp(34px,4.8vw,58px);margin-bottom:18px}
+.lead{max-width:58ch;opacity:.85}
+/* day timeline */
+.day{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 2px 20px;margin-top:34px}
+.moment{flex:0 0 min(80vw,380px);scroll-snap-align:start;border-radius:24px;overflow:hidden;background:rgba(255,255,255,.35);border:1px solid rgba(255,255,255,.4);backdrop-filter:blur(6px)}
+.moment .ph{aspect-ratio:4/3}
+.moment div.tx{padding:16px 18px 20px}
+.moment time{font-size:14px;color:var(--palm);font-weight:500}
+.moment h3{font-size:24px;margin:4px 0 6px}.moment p{margin:0;font-size:15px;opacity:.85}
+/* bento */
+.bento{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:clamp(170px,20vw,260px);gap:14px;margin-top:34px}
+.tile{position:relative;border-radius:22px;overflow:hidden}
+.tile span{position:absolute;left:16px;bottom:14px;color:#fff;font-size:15px;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.tile img{transition:transform 1s ease}.tile:hover img{transform:scale(1.05)}
+.big{grid-column:span 2;grid-row:span 2}
+/* planner */
+.plan{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center;border-radius:28px;padding:clamp(22px,4vw,52px);background:rgba(18,14,31,.6);color:#f3e5cf;border:1px solid rgba(217,160,102,.35)}
+.plan .ph{aspect-ratio:4/3;border-radius:18px;overflow:hidden}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 18px}
+.chip{min-height:44px;padding:0 18px;border-radius:999px;border:1px solid rgba(243,229,207,.45);background:transparent;color:#f3e5cf;font:400 15px Outfit,sans-serif;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--dune);border-color:var(--dune);color:#2a1a0c}
+.sum{font-size:15px;min-height:1.5em;color:#f7d9a8}
+.lbl{font-size:14px;opacity:.8;margin:0}
+.reveal{opacity:0;transform:translateY(34px)}
+footer{padding:40px max(5vw,16px);color:#d8cbe6;font-size:14px;display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between}
+.demo{font-size:13px;opacity:.75;margin-top:14px}
+@media(max-width:600px){.nav{flex-wrap:nowrap;gap:12px;padding:8px 14px;white-space:nowrap}.nav a{font-size:13px}.nav b{font-size:14px;letter-spacing:.18em}}
+@media(max-width:760px){.bento{grid-template-columns:repeat(2,minmax(0,1fr))}.big{grid-column:span 2;grid-row:span 1}.plan{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal,.hero h1 .w{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Main"><b>SARAB</b><a href="#day">A day here</a><a href="#villas">Villas</a><a href="#stay">Plan a stay</a></nav>
+<div class="clock" aria-hidden="true" id="clock">05:40 · dawn</div>
+
+<header class="hero">
+  <img src="img/s01.jpg" alt="Drone view rising over red dunes at dawn to reveal low sand-coloured villas with plunge pools">
+  <div>
+    <h1 id="ht">Where the dunes keep a secret</h1>
+    <p>Twenty-four private villas hidden in the sand sea, each with its own plunge pool, falconry at sunrise and dinners under the stars.</p>
+    <a class="btn" href="#stay" id="cta">Plan your stay</a>
+  </div>
+</header>
+
+<section class="band"><div class="wrap">
+  <p class="kicker">The mirage is real</p>
+  <h2 class="reveal">Silence, made beautiful</h2>
+  <p class="lead reveal">SARAB is built low into the dunes in rammed earth and palm wood, so from the desert it almost disappears. Inside, it is all light, linen and the long view.</p>
+</div></section>
+
+<section class="band" id="day" style="padding-top:0"><div class="wrap">
+  <p class="kicker">A day at SARAB</p>
+  <h2 class="reveal">From first light to the last star</h2>
+  <div class="day" id="dayRail"></div>
+</div></section>
+
+<section class="band" id="villas"><div class="wrap">
+  <p class="kicker">The villas</p>
+  <h2 class="reveal">Your own corner of the desert</h2>
+  <div class="bento" id="bento"></div>
+</div></section>
+
+<section class="band" id="stay"><div class="wrap">
+  <div class="plan">
+    <div class="ph"><img src="img/s10.jpg" alt="The resort villas glowing warm at twilight among the dunes" loading="lazy"></div>
+    <div>
+      <p class="kicker" style="color:#f7d9a8">Plan a stay</p>
+      <h2>Shape your escape</h2>
+      <p class="lbl">Nights</p>
+      <div class="row" role="group" aria-label="Nights" id="nights"></div>
+      <p class="lbl">Add an experience</p>
+      <div class="row" role="group" aria-label="Experiences" id="exps"></div>
+      <button class="btn" type="button" id="req">Request availability</button>
+      <p class="sum" id="sum" aria-live="polite"></p>
+    </div>
+  </div>
+  <p class="demo">SARAB is a sample resort created by Lenur Studio to show a landing page; all images are AI-generated spec work.</p>
+</div></section>
+
+<footer><span>SARAB — desert retreat</span><span>Landing page and visuals by Lenur Studio</span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+{
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const day=[["06:00","Falcon at sunrise","Walk the ridge with our falconer as the sand turns gold.","s04"],["10:00","Your plunge pool","Cool water, warm stone and nothing but dunes.","s02"],["14:00","Spa in the shade","Oud, rose and a stone basin out of the heat.","s06"],["17:30","Horses on the crest","Arabian horses at the hour the desert glows.","s07"],["20:00","Dinner under the stars","Lanterns, fire bowls and a long table in the sand.","s05"]];
+document.getElementById('dayRail').innerHTML=day.map(d=>`<article class="moment"><div class="ph"><img src="img/${d[3]}.jpg" alt="${d[1]}" loading="lazy"></div><div class="tx"><time>${d[0]}</time><h3>${d[1]}</h3><p>${d[2]}</p></div></article>`).join('');
+const tiles=[["big","s03","Canopy bed, framed dunes"],["","s08","Pool at blue hour"],["","s09","Breakfast on the terrace"]];
+document.getElementById('bento').innerHTML=tiles.map(t=>`<figure class="tile ${t[0]} reveal" style="margin:0"><img src="img/${t[1]}.jpg" alt="${t[2]}" loading="lazy"><span>${t[2]}</span></figure>`).join('');
+const nights=["2 nights","3 nights","5 nights","7 nights"],exps=["Falconry","Horse ride","Spa ritual","Star dinner"];
+let n=nights[1];const sel=new Set(["Star dinner"]);
+const drawN=()=>{document.getElementById('nights').innerHTML=nights.map(x=>`<button type="button" class="chip" aria-pressed="${x===n}">${x}</button>`).join('')};
+const drawE=()=>{document.getElementById('exps').innerHTML=exps.map(x=>`<button type="button" class="chip" aria-pressed="${sel.has(x)}">${x}</button>`).join('')};
+const drawS=()=>{document.getElementById('sum').textContent=`${n}${sel.size?' with '+[...sel].join(', ').toLowerCase():''}.`};
+drawN();drawE();drawS();
+document.getElementById('nights').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;n=b.textContent;drawN();drawS()});
+document.getElementById('exps').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const v=b.textContent;sel.has(v)?sel.delete(v):sel.add(v);drawE();drawS()});
+document.getElementById('req').addEventListener('click',()=>{document.getElementById('sum').textContent=`Demo page: a real launch would send a request for ${n}${sel.size?' with '+[...sel].join(', ').toLowerCase():''}.`});
+document.querySelectorAll('.btn').forEach(b=>b.addEventListener('pointermove',e=>{const r=b.getBoundingClientRect();b.style.setProperty('--mx',(e.clientX-r.left)+'px');b.style.setProperty('--my',(e.clientY-r.top)+'px')}));
+/* sky follows the scroll: dawn → noon → dusk → night */
+const stops=[[247,217,168],[243,229,207],[226,170,140],[59,42,79],[18,14,31]];
+const labels=[[5,40,"dawn"],[12,0,"noon"],[17,30,"golden hour"],[19,45,"dusk"],[22,30,"night"]];
+const clock=document.getElementById('clock');
+const sky=()=>{const max=document.documentElement.scrollHeight-innerHeight;const p=max>0?Math.min(1,scrollY/max):0;const f=p*(stops.length-1),i=Math.min(stops.length-2,Math.floor(f)),t=f-i;const c=stops[i].map((v,k)=>Math.round(v+(stops[i+1][k]-v)*t));document.body.style.backgroundColor=`rgb(${c})`;document.body.style.color=p>.62?'#f3e5cf':'#2a2118';const L=labels[Math.round(p*(labels.length-1))];const mins=Math.round((5*60+40)+p*(17*60));const hh=String(Math.floor(mins/60)%24).padStart(2,'0'),mm=String(mins%60).padStart(2,'0');clock.textContent=`${hh}:${mm} · ${L[2]}`};
+addEventListener('scroll',sky,{passive:true});sky();
+const h=document.getElementById('ht');h.innerHTML=h.textContent.split(' ').map(w=>`<span class="w">${w}</span>`).join(' ');
+if(!reduce&&window.anime){
+  anime({targets:'.hero h1 .w',opacity:[0,1],translateY:['.5em',0],rotate:[2,0],delay:anime.stagger(120,{start:400}),duration:1100,easing:'easeOutQuart'});
+  const io=new IntersectionObserver(es=>{es.forEach(en=>{if(!en.isIntersecting)return;anime({targets:en.target,opacity:[0,1],translateY:[34,0],duration:1000,easing:'easeOutCubic'});io.unobserve(en.target)})},{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+}else{document.querySelectorAll('.reveal,.hero h1 .w').forEach(el=>{el.style.opacity=1;el.style.transform='none'})}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KHAZNA Pralines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: hushed, ceremonial, a jeweller's window at night
+   IDEA: the page behaves like the lacquered gift box — the lid lifts as you scroll
+   PICTURE: the cracking pistachio praline, full-bleed, then the open box in a bento of frames
+   COLOUR and TYPE: emerald lacquer #0d3b2e, deep #071f18, brushed gold #c9a45c; Cormorant Garamond + Manrope
+   LAYOUT: glass nav, full-bleed hero, bento grid, marquee band, story rows, gift CTA, footer */
+:root{color-scheme:dark;--bg:#071f18;--lac:#0d3b2e;--gold:#c9a45c;--gold2:#ecd49a;--ink:#f3ecdc;--mute:#b9b09a}
+:root[data-theme=light]{--bg:#f6f1e6;--lac:#e6dcc6;--ink:#10231c;--mute:#4f5a52;color-scheme:light}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Manrope,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;line-height:1.05;text-wrap:balance;margin:0}
+img{display:block;width:100%;height:100%;object-fit:cover}
+a{color:inherit}
+/* glass navbar (Kokonut-style liquid glass) */
+.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:clamp(12px,3vw,28px);align-items:center;padding:10px 22px;border-radius:999px;
+ background:color-mix(in srgb,var(--bg) 45%,transparent);backdrop-filter:blur(16px) saturate(160%);-webkit-backdrop-filter:blur(16px) saturate(160%);
+ border:1px solid color-mix(in srgb,var(--gold) 35%,transparent);box-shadow:0 8px 30px rgba(0,0,0,.25);max-width:calc(100vw - 24px);flex-wrap:wrap;justify-content:center}
+.nav b{font-family:"Cormorant Garamond",serif;letter-spacing:.18em;color:var(--gold2);font-size:18px}
+.nav a{text-decoration:none;font-size:14px;color:var(--mute)}.nav a:hover,.nav a:focus-visible{color:var(--ink)}
+/* hero */
+.hero{position:relative;min-height:min(100svh,880px);display:grid;place-items:end start;padding:0 max(5vw,16px) clamp(40px,8vh,90px);overflow:hidden}
+.hero img{position:absolute;inset:0;z-index:-2;transform:scale(1.08);animation:push 14s ease-out forwards}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(7,31,24,.15) 30%,rgba(7,31,24,.92))}
+@keyframes push{to{transform:scale(1)}}
+.hero h1{font-size:clamp(40px,7vw,88px);color:#f3ecdc;max-width:12ch}
+.hero h1 .w{display:inline-block;opacity:0;transform:translateY(.6em);filter:blur(6px)}
+.hero p{color:#ddd3bb;max-width:46ch;margin:18px 0 26px;font-size:17px}
+/* shimmer button (Magic UI-style) */
+.btn{position:relative;display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 26px;border-radius:999px;border:1px solid var(--gold);color:#071f18;background:var(--gold);font-weight:600;text-decoration:none;overflow:hidden;cursor:pointer;font:600 15px Manrope,sans-serif}
+.btn::after{content:"";position:absolute;inset:-40% auto -40% -60%;width:40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.75),transparent);transform:skewX(-20deg);animation:shine 3.2s ease-in-out infinite}
+@keyframes shine{0%,60%{left:-60%}100%{left:130%}}
+.btn.ghost{background:transparent;color:var(--gold2)}.btn:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
+.band{padding:clamp(48px,7vw,110px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+.kicker{color:var(--gold);font-size:14px;margin:0 0 10px}
+h2{font-size:clamp(32px,4.4vw,52px);margin-bottom:18px}
+.lead{color:var(--mute);max-width:60ch;font-size:17px}
+/* bento */
+.bento{display:grid;gap:14px;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(150px,18vw,230px);margin-top:36px}
+.tile{position:relative;border-radius:22px;overflow:hidden;background:var(--lac);isolation:isolate}
+.tile img{transition:transform .9s cubic-bezier(.2,.7,.2,1)}.tile:hover img{transform:scale(1.06)}
+.tile span{position:absolute;left:16px;bottom:14px;right:16px;color:#f3ecdc;font-size:14px;text-shadow:0 1px 10px rgba(0,0,0,.7)}
+.t1{grid-column:span 2;grid-row:span 2}.t2{grid-column:span 2}.t5{grid-column:span 2}
+.reveal{opacity:0;transform:translateY(40px)}
+/* marquee */
+.marq{border-block:1px solid color-mix(in srgb,var(--gold) 35%,transparent);overflow:hidden;padding:18px 0;background:var(--lac)}
+.marq div{display:flex;gap:48px;width:max-content;animation:mq 32s linear infinite;font-family:"Cormorant Garamond",serif;font-size:clamp(22px,3vw,34px);color:var(--gold2);white-space:nowrap}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* story rows */
+.row{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(24px,5vw,70px);align-items:center;margin-top:clamp(40px,6vw,80px)}
+.row.flip{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)}.row.flip .ph{order:2}
+.ph{aspect-ratio:16/10;border-radius:26px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.row h3{font-size:clamp(26px,3vw,38px);margin-bottom:12px}
+.row p{color:var(--mute);max-width:48ch}
+/* gift */
+.gift{position:relative;border-radius:32px;overflow:hidden;min-height:440px;display:grid;align-items:end;padding:clamp(24px,5vw,60px)}
+.gift img{position:absolute;inset:0;z-index:-2}
+.gift::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(7,31,24,.92) 0%,rgba(7,31,24,.55) 55%,transparent)}
+.gift h2,.gift p{color:#f3ecdc}.gift p{max-width:44ch;color:#ddd3bb}
+.opts{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 24px}
+.opt{min-height:44px;padding:0 18px;border-radius:999px;border:1px solid rgba(236,212,154,.5);background:rgba(7,31,24,.5);color:#f3ecdc;font:500 15px Manrope,sans-serif;cursor:pointer}
+.opt[aria-pressed=true]{background:var(--gold);color:#071f18;border-color:var(--gold)}
+.note{font-size:14px;color:#ecd49a;min-height:1.4em}
+footer{padding:40px max(5vw,16px);color:var(--mute);font-size:14px;display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between}
+.demo{font-size:13px;color:var(--mute);margin-top:14px}
+@media(max-width:760px){.bento{grid-template-columns:repeat(2,minmax(0,1fr))}.t1{grid-column:span 2}.row,.row.flip{grid-template-columns:minmax(0,1fr)}.row.flip .ph{order:0}.nav a.x{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal,.hero h1 .w{opacity:1;transform:none;filter:none}}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Main"><b>KHAZNA</b><a href="#collection">Collection</a><a href="#atelier" class="x">Atelier</a><a href="#gift">Gift</a></nav>
+
+<header class="hero">
+  <img src="img/s01.jpg" alt="Dark chocolate praline cracking open to reveal a pistachio and cardamom centre">
+  <div>
+    <h1 id="ht">A treasure you open slowly</h1>
+    <p>Hand-finished pralines with pistachio, cardamom and saffron, set in emerald lacquer. Made in small batches for the moments worth marking.</p>
+    <a class="btn" href="#gift">Choose your box</a>
+  </div>
+</header>
+
+<section class="band" id="collection"><div class="wrap">
+  <p class="kicker">The collection</p>
+  <h2 class="reveal">Sixteen pralines, one lacquered box</h2>
+  <p class="lead reveal">Each box holds four flavours inspired by the Gulf table. The emerald lid carries a gold arabesque made by hand, so it is kept long after the last praline.</p>
+  <div class="bento" id="bento"></div>
+</div></section>
+
+<div class="marq" aria-hidden="true"><div id="mq"></div></div>
+
+<section class="band" id="atelier"><div class="wrap" id="rows"></div></section>
+
+<section class="band" id="gift"><div class="wrap">
+  <div class="gift">
+    <img src="img/s09.jpg" alt="Three emerald gift boxes tied with silk ribbons beside glowing lanterns">
+    <div>
+      <p class="kicker">For Eid, weddings and corporate gifting</p>
+      <h2>Build your gift</h2>
+      <p>Pick a size and we prepare the boxes with emerald silk ribbon and a handwritten card.</p>
+      <div class="opts" role="group" aria-label="Box size" id="opts"></div>
+      <button class="btn" id="req" type="button">Request this gift</button>
+      <p class="note" id="note" aria-live="polite"></p>
+    </div>
+  </div>
+  <p class="demo">KHAZNA is a sample brand created by Lenur Studio to show a product landing page; all images are AI-generated spec work.</p>
+</div></section>
+
+<footer><span>KHAZNA — chocolatier, Doha</span><span>Landing page and visuals by Lenur Studio</span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+{
+const tiles=[["t1","s03","The box opens: sixteen pralines in gold cups"],["t2","s02","Emerald lacquer, brushed gold edge"],["t3","s04","Pistachio, rose and gold leaf"],["t4","s05","Single-origin dark chocolate"],["t5","s10","Served on gold"]];
+document.getElementById('bento').innerHTML=tiles.map(t=>`<figure class="tile ${t[0]} reveal" style="margin:0"><img src="img/${t[1]}.jpg" alt="${t[2]}" loading="lazy"><span>${t[2]}</span></figure>`).join('');
+const words=["Pistachio & cardamom","Saffron caramel","Rose & raspberry","Date & tahini","Gold leaf","Hand-finished in Doha"];
+document.getElementById('mq').innerHTML=[...words,...words].map(w=>`<span>${w} ✦</span>`).join('');
+const rows=[["s06","Finished by hand","Every praline is crowned with edible gold leaf, one at a time, by our chocolatiers."],["s08","Small batches","We temper and set each batch on marble so the shell snaps cleanly and shines."],["s07b","Made for the majlis","Pralines served beside Arabic coffee and dates, the way guests are welcomed at home."]];
+document.getElementById('rows').innerHTML=`<p class="kicker">The atelier</p><h2 class="reveal">Crafted like jewellery</h2>`+rows.map((r,i)=>`<div class="row ${i%2?'flip':''}"><div class="ph reveal"><img src="img/${r[0]}.jpg" alt="${r[1]}" loading="lazy"></div><div class="reveal"><h3>${r[1]}</h3><p>${r[2]}</p></div></div>`).join('');
+const sizes=[["4","4 pralines"],["16","16 pralines"],["32","32 pralines, two tiers"],["corp","Corporate set"]];
+let pick="16";
+const opts=document.getElementById('opts');
+const drawOpts=()=>{opts.innerHTML=sizes.map(s=>`<button type="button" class="opt" aria-pressed="${s[0]===pick}" data-k="${s[0]}">${s[1]}</button>`).join('')};
+drawOpts();
+opts.addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b)return;pick=b.dataset.k;drawOpts()});
+document.getElementById('req').addEventListener('click',()=>{const s=sizes.find(x=>x[0]===pick);document.getElementById('note').textContent=`Demo page: in a real launch this would send a request for "${s[1]}".`});
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const h=document.getElementById('ht');
+h.innerHTML=h.textContent.split(' ').map(w=>`<span class="w">${w}</span>`).join(' ');
+if(!reduce&&window.anime){
+  anime({targets:'.hero h1 .w',opacity:[0,1],translateY:['.6em',0],filter:['blur(6px)','blur(0px)'],delay:anime.stagger(110,{start:300}),duration:900,easing:'easeOutExpo'});
+  const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){anime({targets:en.target,opacity:[0,1],translateY:[40,0],duration:1000,easing:'easeOutCubic'});io.unobserve(en.target)}})},{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+}else{document.querySelectorAll('.reveal,.hero h1 .w').forEach(el=>{el.style.opacity=1;el.style.transform='none';el.style.filter='none'})}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QALAM — Fountain Pen</title>
+<link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Figtree:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: quiet authority, ceremony of signing — the pen for decisions that matter
+   IDEA: ink — a signature writes itself across the page, and the visitor can try the nib on real "paper"
+   COLOUR and TYPE: midnight #0f1d3d, ink #1b3a8a, gold #c9a14a, ivory #f6f0e3; Gilda Display + Figtree */
+:root{--mid:#0f1d3d;--ink:#1b3a8a;--gold:#c9a14a;--ivory:#f6f0e3;--mute:#5d6378}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ivory);color:var(--mid);font:300 16px/1.7 Figtree,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Gilda Display",Georgia,serif;font-weight:400;line-height:1.05;margin:0;text-wrap:balance}
+img{display:block;width:100%;height:100%;object-fit:cover}
+.nav{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:18px max(5vw,16px);color:var(--ivory);background:linear-gradient(rgba(15,29,61,.85),rgba(15,29,61,0))}
+.nav b{font:400 20px "Gilda Display",serif;letter-spacing:.4em}
+.nav a{color:#c9cfe0;text-decoration:none;font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-left:22px}.nav a:hover{color:var(--gold)}
+.hero{position:relative;min-height:min(100svh,900px);background:var(--mid);color:var(--ivory);display:grid;grid-template-columns:1fr 1fr;align-items:center;overflow:hidden}
+.hero .txt{padding:110px max(5vw,20px) 60px;position:relative;z-index:2}
+.hero h1{font-size:clamp(56px,8vw,118px);letter-spacing:.12em}
+.hero h1 small{display:block;font:300 clamp(17px,1.6vw,21px)/1.5 Figtree,sans-serif;letter-spacing:.02em;color:#c9cfe0;margin-top:20px;max-width:30ch}
+.hero .img{height:100%;min-height:420px}
+.sig{display:block;width:min(420px,90%);height:auto;margin:26px 0 30px}
+.sig path{fill:none;stroke:var(--gold);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 28px;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font:400 13px Figtree,sans-serif;letter-spacing:.16em;text-transform:uppercase;transition:all .3s;background:transparent;cursor:pointer}
+.btn:hover{background:var(--gold);color:var(--mid)}.btn:focus-visible{outline:2px solid var(--ivory);outline-offset:3px}
+.btn.d{border-color:var(--mid);color:var(--mid)}.btn.d:hover{background:var(--mid);color:var(--ivory)}
+.band{padding:clamp(70px,10vw,140px) max(5vw,20px)}
+.wrap{max-width:1180px;margin:0 auto}
+.kicker{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin:0 0 14px;font-weight:600}
+h2{font-size:clamp(38px,5.4vw,72px);margin-bottom:18px}
+.lead{color:var(--mute);max-width:52ch;font-size:17px}
+.anat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-top:44px}
+.anat figure{margin:0}.anat .f{aspect-ratio:4/3;overflow:hidden}
+.anat figcaption{padding-top:14px;font-size:15px;color:var(--mute)}
+.anat figcaption b{display:block;font:400 24px "Gilda Display",serif;color:var(--mid)}
+/* try the nib */
+.try{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,5vw,60px);align-items:center}
+.paper{position:relative;background:#fbf7ee;border:1px solid rgba(15,29,61,.12);box-shadow:0 30px 60px -40px rgba(15,29,61,.6);aspect-ratio:16/10;touch-action:none;cursor:crosshair}
+.paper canvas{position:absolute;inset:0;width:100%;height:100%}
+.paper .line{position:absolute;left:8%;right:8%;bottom:26%;border-bottom:1px solid rgba(15,29,61,.25)}
+.paper .x{position:absolute;left:8%;bottom:28%;font:400 22px "Gilda Display",serif;color:rgba(15,29,61,.35)}
+.paper .ph{position:absolute;inset:0;display:grid;place-items:center;color:rgba(15,29,61,.35);font-size:14px;letter-spacing:.2em;text-transform:uppercase;pointer-events:none;transition:opacity .4s}
+.tools{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.tools button{min-height:40px;padding:0 16px;border:1px solid rgba(15,29,61,.25);background:transparent;font:400 13px Figtree,sans-serif;color:var(--mid);cursor:pointer}
+.tools button[aria-pressed="true"]{background:var(--mid);color:var(--ivory)}
+.tools button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.dark{background:var(--mid);color:var(--ivory)}
+.dark .lead{color:#b7bfd6}
+.gift{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,5vw,60px);align-items:center}
+.gift .f{aspect-ratio:16/11;overflow:hidden}
+.strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:40px}
+.strip div{aspect-ratio:4/3;overflow:hidden}
+footer{padding:34px max(5vw,20px);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:#8a90a6;font-size:13px;background:var(--mid)}
+footer b{font:400 16px "Gilda Display",serif;letter-spacing:.4em;color:var(--ivory)}
+.rv{opacity:0;transform:translateY(28px)}
+@media(max-width:860px){.hero,.try,.gift{grid-template-columns:1fr}.hero .img{min-height:320px;order:-1}.hero .txt{padding-top:40px}.anat,.strip{grid-template-columns:1fr}}
+@media(max-width:600px){.nav a{margin-left:12px;font-size:12px}.nav .opt{display:none}.nav b{font-size:17px;letter-spacing:.3em}}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none}*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav class="nav"><b>QALAM</b><div><a href="#nib">The nib</a><a href="#try">Try it</a><a class="opt" href="#gift">Gift</a></div></nav>
+
+<header class="hero">
+  <div class="txt">
+    <h1 id="title">QALAM<small>A fountain pen for the signatures that change things.</small></h1>
+    <svg class="sig" viewBox="0 0 420 90" aria-hidden="true"><path id="sigp" d="M8 62 C30 20 52 18 48 46 C44 70 24 74 30 52 C38 26 70 22 78 46 C84 64 92 66 104 44 C112 30 118 30 120 46 C122 60 132 62 142 42 C150 26 160 26 160 44 C160 60 172 64 184 40 C196 18 214 20 210 48 C206 72 186 70 200 50 C214 30 240 34 250 52 C258 66 270 62 282 40 C292 24 304 30 300 50 C296 68 312 70 330 52 C350 34 372 38 412 30"/></svg>
+    <a class="btn" id="cta" href="#try">Try the nib</a>
+  </div>
+  <div class="img"><img src="img/s10.jpg" alt="Midnight-blue lacquer fountain pen with gold trim glowing on a deep blue background"></div>
+</header>
+
+<main>
+<section class="band" id="nib"><div class="wrap">
+  <p class="kicker rv">Anatomy</p>
+  <h2 class="rv">Lacquer, gold, and a palm frond.</h2>
+  <p class="lead rv">Twenty layers of midnight-blue lacquer, a two-tone gold nib cut by hand, and a clip shaped like a palm frond — the oldest symbol of the Gulf.</p>
+  <div class="anat">
+    <figure class="rv"><div class="f"><img src="img/s03.jpg" alt="Macro of the two-tone gold nib drawing a thin ink line" loading="lazy"></div><figcaption><b>The nib</b>Two-tone gold, tuned to glide without pressure.</figcaption></figure>
+    <figure class="rv"><div class="f"><img src="img/s08.jpg" alt="Macro of the gold palm-frond clip on the lacquer barrel" loading="lazy"></div><figcaption><b>The clip</b>A palm frond in polished gold.</figcaption></figure>
+    <figure class="rv"><div class="f"><img src="img/s07.jpg" alt="Ink bottle with deep blue ink swirling, backlit" loading="lazy"></div><figcaption><b>The ink</b>Deep midnight blue, made to match the barrel.</figcaption></figure>
+  </div>
+</div></section>
+
+<section class="band" id="try" style="padding-top:0"><div class="wrap try">
+  <div class="rv">
+    <p class="kicker">Try it</p>
+    <h2>Sign your name.</h2>
+    <p class="lead">Write on the paper with your finger or mouse. The line thickens and thins like a real gold nib.</p>
+    <div class="tools" role="group" aria-label="Ink colour">
+      <button type="button" data-c="#1b3a8a" aria-pressed="true">Midnight</button>
+      <button type="button" data-c="#111111" aria-pressed="false">Black</button>
+      <button type="button" data-c="#7a2331" aria-pressed="false">Bordeaux</button>
+      <button type="button" id="clear">Clear</button>
+    </div>
+  </div>
+  <div class="paper rv" id="paper"><span class="x">×</span><span class="line"></span><span class="ph" id="ph">Sign here</span><canvas id="pad" aria-label="Signature pad"></canvas></div>
+</div></section>
+
+<section class="band dark" id="gift"><div class="wrap gift">
+  <div class="f rv"><img src="img/s05.jpg" alt="Fountain pen and ink bottle in an open midnight-blue presentation box" loading="lazy"></div>
+  <div class="rv">
+    <p class="kicker">The gift</p>
+    <h2>For a promotion, a wedding, a first contract.</h2>
+    <p class="lead">Presented in a midnight lacquer box with its own ink. Engraving of initials on request.</p>
+    <p style="margin-top:26px"><a class="btn" href="#try">Reserve a QALAM</a></p>
+  </div>
+</div>
+<div class="wrap strip">
+  <div class="rv"><img src="img/s04.jpg" alt="Hand in a white thobe sleeve writing with the pen" loading="lazy"></div>
+  <div class="rv"><img src="img/s09.jpg" alt="Pen beside an envelope sealed with wax" loading="lazy"></div>
+  <div class="rv"><img src="img/s06.jpg" alt="Two pens on a desk overlooking a city at dusk" loading="lazy"></div>
+</div></section>
+</main>
+
+<footer><b>QALAM</b><span>Fountain pens · Concept by Lenur Studio</span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<script>
+(function(){
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,A=typeof anime!=='undefined'&&!reduce;
+  // signature pad with nib-like width
+  var paper=document.getElementById('paper'),cv=document.getElementById('pad'),cx=cv.getContext('2d'),ph=document.getElementById('ph'),color='#1b3a8a',dpr=Math.min(devicePixelRatio||1,2),last=null,drawing=false;
+  function size(){var r=paper.getBoundingClientRect();var img=cx.getImageData?null:null;cv.width=r.width*dpr;cv.height=r.height*dpr;cx.lineCap='round';cx.lineJoin='round'}
+  size();addEventListener('resize',size);
+  function pt(e){var r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)*dpr,y:(e.clientY-r.top)*dpr,t:performance.now()}}
+  cv.addEventListener('pointerdown',function(e){drawing=true;last=pt(e);ph.style.opacity=0;cv.setPointerCapture(e.pointerId)});
+  cv.addEventListener('pointermove',function(e){if(!drawing)return;var p=pt(e),dx=p.x-last.x,dy=p.y-last.y,d=Math.hypot(dx,dy),v=d/Math.max(1,p.t-last.t);
+    var w=Math.max(1.2,Math.min(5.5,5.5-v*1.4))*dpr;var ang=Math.abs(Math.atan2(dy,dx));w*=0.75+0.35*Math.abs(Math.sin(ang-0.6));
+    cx.strokeStyle=color;cx.lineWidth=w;cx.beginPath();cx.moveTo(last.x,last.y);cx.lineTo(p.x,p.y);cx.stroke();last=p});
+  ['pointerup','pointercancel','pointerleave'].forEach(function(t){cv.addEventListener(t,function(){drawing=false})});
+  document.querySelectorAll('.tools [data-c]').forEach(function(b){b.addEventListener('click',function(){color=b.dataset.c;document.querySelectorAll('.tools [data-c]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')})})});
+  document.getElementById('clear').addEventListener('click',function(){cx.clearRect(0,0,cv.width,cv.height);ph.style.opacity=1});
+  var sig=document.getElementById('sigp'),L=sig.getTotalLength();sig.style.strokeDasharray=L;
+  if(!A){sig.style.strokeDashoffset=0;document.querySelectorAll('.rv').forEach(function(e){e.style.opacity=1;e.style.transform='none'});return;}
+  sig.style.strokeDashoffset=L;
+  anime.timeline({easing:'easeOutExpo'})
+    .add({targets:'#title',opacity:[0,1],translateY:[30,0],duration:1300})
+    .add({targets:sig,strokeDashoffset:[L,0],duration:2600,easing:'easeInOutSine'},'-=600')
+    .add({targets:'#cta',opacity:[0,1],duration:800},'-=800');
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting)return;io.unobserve(e.target);anime({targets:e.target,opacity:[0,1],translateY:[28,0],duration:1100,easing:'easeOutCubic'});})},{threshold:.15});
+  document.querySelectorAll('.rv').forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>
