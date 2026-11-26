@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lenur Studio — Новый год</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: warm, festive, confident — a studio showing finished New Year films
+   IDEA: an advent calendar of lit windows; each window opens onto a live film
+   PICTURE: full-bleed looping ballroom film in the hero, framed like a frosted window
+   COLOUR and TYPE: pine night #0f2a23, frost white, cranberry #d22f47; Unbounded + Inter
+   LAYOUT: hero film band, window grid of six films, price ladder, contact strip */
+:root{color-scheme:light dark;--bg:light-dark(#f6f8f5,#0b1f1a);--pine:#0f2a23;--ink:light-dark(#0f2a23,#eef4f0);--soft:light-dark(#4b5f58,#a9bdb5);--card:light-dark(#ffffff,#12322a);--line:light-dark(#d9e3de,#1f4439);--red:#d22f47;--frost:#eef4f0}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Unbounded,Inter,sans-serif;line-height:1.05;text-wrap:balance;margin:0}
+.band{padding:clamp(28px,4vw,64px) max(5vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+header{position:sticky;top:0;z-index:5;background:var(--pine);color:var(--frost);display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px max(5vw,16px)}
+.logo{font-family:Unbounded;font-weight:700;font-size:17px;letter-spacing:.01em}
+.lang{display:flex;gap:4px;background:#ffffff14;border-radius:999px;padding:4px}
+.lang a{color:var(--frost);text-decoration:none;font-weight:600;font-size:14px;padding:8px 14px;border-radius:999px;min-height:36px;display:flex;align-items:center}
+.lang a[aria-current=true]{background:var(--frost);color:var(--pine)}
+.hero{background:var(--pine);color:var(--frost);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(20px,4vw,56px);align-items:center}
+.hero p{color:#c8d8d1;font-size:17px;max-width:46ch}
+.hero h1{font-size:clamp(32px,4.6vw,52px)}
+.win{position:relative;border-radius:22px 22px 10px 10px;overflow:hidden;aspect-ratio:16/9;background:#071612;box-shadow:0 30px 60px -30px #000,0 0 0 8px #ffffff12}
+.win video{width:100%;height:100%;object-fit:cover;display:block}
+.win::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent calc(50% - 3px),#0f2a23aa calc(50% - 3px),#0f2a23aa calc(50% + 3px),transparent calc(50% + 3px)),radial-gradient(120% 80% at 50% 0,transparent 60%,#ffffff22)}
+.cta{display:inline-flex;align-items:center;gap:10px;margin-top:22px;background:var(--red);color:#fff;text-decoration:none;font-weight:600;padding:14px 22px;border-radius:12px;min-height:48px}
+.cta:focus-visible,.lang a:focus-visible,button:focus-visible{outline:3px solid #ffd7de;outline-offset:2px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:22px;font-size:14px;color:#c8d8d1}
+.facts b{color:var(--frost);font-weight:600}
+h2{font-size:clamp(26px,3vw,36px);margin-bottom:8px}
+.lead{color:var(--soft);max-width:62ch;margin:0 0 26px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.film{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.film .win{border-radius:0;box-shadow:none;aspect-ratio:16/9}
+.film .win::after{display:none}
+.film .txt{padding:16px 18px 20px}
+.film h3{font-size:18px;margin-bottom:6px}
+.film p{margin:0;color:var(--soft);font-size:15px}
+.tag{display:inline-block;font-size:13px;font-weight:600;color:var(--red);margin-bottom:6px}
+.prices{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.price{border-top:3px solid var(--red);padding-top:14px}
+.price .n{font-family:Unbounded;font-size:26px;white-space:nowrap}
+.price p{margin:6px 0 0;color:var(--soft);font-size:15px}
+.note{margin-top:20px;color:var(--soft);font-size:15px}
+.contact{background:var(--pine);color:var(--frost)}
+.contact .row{display:flex;flex-wrap:wrap;gap:14px 40px;align-items:center;justify-content:space-between}
+.contact a{color:var(--frost)}
+.contact .big{font-family:Unbounded;font-size:clamp(20px,2.4vw,28px)}
+footer{padding:18px max(5vw,16px);font-size:13px;color:var(--soft);text-align:center}
+
+#snow{position:fixed;inset:0;pointer-events:none;z-index:1}
+header,section,footer{position:relative;z-index:2}
+.hero{background:radial-gradient(90% 120% at 80% 0,#1d5a48 0,#0f2a23 55%,#081a15 100%);overflow:hidden}
+.shiny{background:linear-gradient(100deg,#fff 0%,#fff 40%,#ffd98a 48%,#fff 56%,#fff 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 4.5s linear infinite}
+@keyframes shine{from{background-position:120% 0}to{background-position:-120% 0}}
+.cta{position:relative;overflow:hidden;box-shadow:0 10px 30px -10px #d22f47}
+.cta::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,#ffffff88 50%,transparent 70%);transform:translateX(-120%);animation:sweep 2.8s ease-in-out infinite}
+@keyframes sweep{60%,100%{transform:translateX(120%)}}
+.spark{position:absolute;width:10px;height:10px;pointer-events:none;background:radial-gradient(circle,#fff 0,#ffe7a8 35%,transparent 70%);border-radius:50%;opacity:0}
+.marquee{overflow:hidden;background:#d22f47;color:#fff;font-family:Unbounded;font-size:15px;white-space:nowrap;position:relative;z-index:2}
+.marquee div{display:inline-block;padding:12px 0;animation:mq 38s linear infinite}
+.marquee span{margin:0 28px}
+@keyframes mq{to{transform:translateX(-50%)}}
+.grid{grid-template-columns:repeat(6,minmax(0,1fr))}
+.film{grid-column:span 2;transition:transform .35s,box-shadow .35s}
+.film:nth-child(1),.film:nth-child(2){grid-column:span 3}
+.film:hover{transform:translateY(-6px);box-shadow:0 24px 40px -24px #0f2a23aa,0 0 0 1px #ffd98a66}
+.reveal{opacity:0}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.film,.film:nth-child(1),.film:nth-child(2){grid-column:span 1}.prices{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.hero{grid-template-columns:1fr}.hero .win{order:-1}.grid{grid-template-columns:1fr}.prices{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.shiny,.cta::before,.marquee div{animation:none}.reveal{opacity:1}#snow{display:none}.hero video{display:none}.hero .win{background:url(v/carnival.jpg) center/cover}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
+</head>
+<body>
+<canvas id="snow" aria-hidden="true"></canvas>
+<header><span class="logo">Lenur Studio</span>
+<nav class="lang" aria-label="Language"><a href="#ru" data-l="ru">RU</a><a href="#en" data-l="en">EN</a></nav></header>
+
+<section class="band hero"><div class="wrap" style="display:contents">
+<div>
+<h1 class="shiny" data-t="h1"></h1>
+<p data-t="sub"></p>
+<a class="cta" href="#contact" data-t="cta"></a>
+<div class="facts" id="facts"></div>
+</div>
+<div class="win"><video src="v/hero.mp4" poster="v/carnival.jpg" autoplay muted loop playsinline aria-hidden="true"></video></div>
+</div></section>
+<div class="marquee" aria-hidden="true"><div id="mq"></div></div>
+
+<section class="band"><div class="wrap">
+<h2 data-t="filmsH"></h2>
+<p class="lead" data-t="filmsP"></p>
+<div class="grid" id="grid"></div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+<h2 data-t="canH"></h2>
+<p class="lead" data-t="canP"></p>
+<div class="prices" id="cans"></div>
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap">
+<h2 data-t="priceH"></h2>
+<p class="lead" data-t="priceP"></p>
+<div class="prices" id="prices"></div>
+<p class="note" data-t="priceNote"></p>
+</div></section>
+
+<section class="band contact" id="contact"><div class="wrap row">
+<div><h2 data-t="contactH" style="margin-bottom:10px"></h2><p style="margin:0;color:#c8d8d1" data-t="contactP"></p></div>
+<div><div class="big">WhatsApp +974 5509 6531</div><div><a href="mailto:lbekirov137@gmail.com">lbekirov137@gmail.com</a></div></div>
+</div></section>
+<footer data-t="foot"></footer>
+
+<script>
+{
+const T={
+ru:{h1:"Новогодние видео, которые хочется досмотреть",sub:"Мини-фильмы с Дедом Морозом, Снегурочкой и сказочными героями: сюжет с интригой, живые персонажи, озвучка и музыка. Для бизнеса, праздников и соцсетей — на русском и английском.",cta:"Заказать ролик",
+facts:[["2 языка","RU и EN"],["от 2 дней","готовый ролик"],["бесплатно","пробный фрагмент"]],
+filmsH:"Свежая новогодняя серия",filmsP:"Каждый ролик — короткая история со счастливым концом. Нажмите и смотрите со звуком.",
+canH:"Снимем всё, что придумаете",canP:"Любые герои, любой сюжет, любая задача — сделаем под вас.",
+cans:[["🎁 Именные поздравления","Дед Мороз обращается по имени к ребёнку, маме, коллеге — словами, стихами или песней"],["🐾 Животные","Ваш кот, собака или сказочные звери — главные герои"],["👨‍👩‍👧 Люди и семьи","Семья, друзья, команда в новогодней сказке"],["🏢 Для бизнеса","Поздравление клиентов и сотрудников с вашим логотипом"],["🎄 Праздники и события","Корпоратив, утренник, свадьба, юбилей, день рождения"],["💃 Споём и станцуем","Герои мультфильмов и фильмов споют и станцуют лично для вас"],["✨ Любая идея","Мультфильм, реклама, Reels, клип — расскажите, сделаем"]],
+priceH:"Цены",priceP:"Чем больше роликов вы заказываете, тем дешевле каждый.",
+prices:[["2 000 ₽","Ролик 15 сек под ключ"],["3 000 ₽","Ролик 30 сек: сценарий, видео, озвучка, музыка"],["от 2 500 ₽","за ролик при заказе от 3 штук"],["от 10 000 ₽","Пакет из 12 роликов — сделаем быстро, сразу всей партией"]],
+priceNote:"В цену входят 2 раунда правок. Предоплата 50 %, готовые файлы без водяного знака — после полной оплаты.",
+contactH:"Расскажите, кого поздравляем",contactP:"Пришлите идею, логотип или фото — покажем пробный фрагмент бесплатно.",foot:"Lenur Studio · ИИ-видео и анимация · 2026",
+films:[["carnival","Новогодний карнавал","Бал-маскарад, лиса и волк хулиганят, а Снегурочка спасает праздник."],["plane","С Новым годом на борту!","За иллюминатором пролетают сани, а в салон входит Дед Мороз."],["ship","Новый год в открытом море","Шторм в новогоднюю ночь — и с неба летят сани Деда Мороза."],["hospital","Новый год в детской больнице","Врач готовит сюрприз, и в палату входят Дед Мороз со Снегурочкой."],["song","Лесная новогодняя песенка","Зайка, лиса и волк поют у ёлки — кто споёт лучше?"],["bear","Медведь проспал Новый год","Весь лес готовится к празднику, а Мишка спит. Успеют разбудить?"]],tag:"Поздравление"},
+en:{h1:"New Year films people watch to the end",sub:"Short films with Father Frost, the Snow Maiden and fairy-tale heroes: a gripping plot, living characters, voice-over and music. For brands, celebrations and social media — in English and Russian.",cta:"Order a film",
+facts:[["2 languages","EN and RU"],["from 2 days","finished film"],["free","test fragment"]],
+filmsH:"Our fresh New Year series",filmsP:"Every film is a short story with a happy ending. Tap and watch with sound.",
+canH:"We will make anything you imagine",canP:"Any characters, any story, any task — made just for you.",
+cans:[["🎁 Personal greetings","Father Frost greets your child, mum or colleague by name — in words, a poem or a song"],["🐾 Animals","Your cat, dog or fairy-tale animals as the stars"],["👨‍👩‍👧 People and families","Your family, friends or team in a New Year tale"],["🏢 For business","Greetings to clients and staff with your logo"],["🎄 Celebrations and events","Corporate party, kids party, wedding, anniversary, birthday"],["💃 Songs and dances","Cartoon and film characters sing and dance just for you"],["✨ Any idea","Cartoon, ad, Reels, music video — tell us, we will make it"]],
+priceH:"Prices",priceP:"The more films you order, the less each one costs.",
+prices:[["$25","15-second film, turnkey"],["$40","30-second film: script, video, voice-over, music"],["from $30","per film when you order 3 or more"],["from $130","Bundle of 12 films — fast delivery, all at once"]],
+priceNote:"Two rounds of revisions included. 50% upfront; final files without watermark after full payment.",
+contactH:"Tell us who you want to surprise",contactP:"Send an idea, a logo or photos — we will show a free test fragment.",foot:"Lenur Studio · AI video and animation · 2026",
+films:[["carnival","The New Year Masquerade","A royal ball, a sly fox and a grey wolf cause chaos — the Snow Maiden saves the night."],["plane","Happy New Year on Board!","A magic sleigh flies past the window and Father Frost walks into the cabin."],["ship","New Year at Sea","A storm on New Year's night — and a sleigh flies in from the sky."],["hospital","A New Year Miracle in Hospital","The doctor prepares a surprise for the children's ward."],["song","The Forest New Year Song","The bunny, the fox and the wolf sing by the tree — who sings best?"],["bear","The Bear Who Slept Through New Year","The whole forest is ready, but the bear is still snoring."]],tag:"Greeting film"}
+};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const grid=document.getElementById('grid'),prices=document.getElementById('prices'),facts=document.getElementById('facts');
+var render=function(l){
+  const t=T[l];document.documentElement.lang=l;
+  document.querySelectorAll('[data-t]').forEach(e=>{e.textContent=t[e.dataset.t]});
+  document.title=l==='ru'?'Lenur Studio — Новый год':'Lenur Studio — New Year';
+  facts.innerHTML=t.facts.map(f=>'<span><b>'+esc(f[0])+'</b> '+esc(f[1])+'</span>').join('');
+  grid.innerHTML=t.films.map(f=>'<article class="film reveal"><div class="win"><video controls preload="none" playsinline poster="v/'+f[0]+'.jpg" src="v/'+f[0]+'_'+l+'.mp4"></video></div><div class="txt"><span class="tag">'+esc(t.tag)+'</span><h3>'+esc(f[1])+'</h3><p>'+esc(f[2])+'</p></div></article>').join('');
+  document.getElementById('cans').innerHTML=t.cans.map(p=>'<div class="price reveal"><div class="n" style="font-size:20px;white-space:normal">'+esc(p[0])+'</div><p>'+esc(p[1])+'</p></div>').join('');
+  prices.innerHTML=t.prices.map(p=>'<div class="price reveal"><div class="n">'+esc(p[0])+'</div><p>'+esc(p[1])+'</p></div>').join('');
+  document.querySelectorAll('.lang a').forEach(a=>a.setAttribute('aria-current',a.dataset.l===l?'true':'false'));
+};
+
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function after(l){
+  const t=T[l];const items=t.films.map(f=>'<span>✦ '+esc(f[1])+'</span>').join('');
+  document.getElementById('mq').innerHTML=items+items;
+  if(window.anime&&!RM){
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){io.unobserve(e.target);anime({targets:e.target,opacity:[0,1],translateY:[40,0],scale:[.96,1],duration:900,easing:'easeOutExpo',delay:(+e.target.dataset.i||0)*90})}}),{threshold:.15});
+    document.querySelectorAll('.reveal').forEach((e,i)=>{e.dataset.i=i%3;io.observe(e)});
+  } else document.querySelectorAll('.reveal').forEach(e=>e.style.opacity=1);
+}
+const _render=render;render=function(l){_render(l);after(l)};
+if(!RM){
+  const c=document.getElementById('snow'),x=c.getContext('2d');let W,H,fl=[];
+  const size=()=>{W=c.width=innerWidth;H=c.height=innerHeight;fl=Array.from({length:Math.min(140,W/8|0)},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2.6+.6,s:Math.random()*.7+.3,d:Math.random()*Math.PI*2}))};
+  size();addEventListener('resize',size);
+  (function loop(){x.clearRect(0,0,W,H);x.fillStyle='rgba(255,255,255,.85)';for(const f of fl){f.y+=f.s;f.d+=.01;f.x+=Math.sin(f.d)*.4;if(f.y>H){f.y=-5;f.x=Math.random()*W}x.beginPath();x.arc(f.x,f.y,f.r,0,7);x.fill()}requestAnimationFrame(loop)})();
+  const hero=document.querySelector('.hero');
+  setInterval(()=>{if(!window.anime)return;const p=document.createElement('i');p.className='spark';p.style.left=Math.random()*100+'%';p.style.top=Math.random()*100+'%';hero.appendChild(p);anime({targets:p,opacity:[0,1,0],scale:[.2,1.6,.2],rotate:'1turn',duration:1600,easing:'easeInOutSine',complete:()=>p.remove()})},260);
+  document.querySelector('.cta').addEventListener('click',()=>{try{window.confetti&&confetti({particleCount:120,spread:75,origin:{y:.7},colors:['#d22f47','#ffd98a','#ffffff','#2f8f6f']})}catch(e){}});
+  setTimeout(()=>{try{window.confetti&&confetti({particleCount:80,spread:100,origin:{y:.35},colors:['#ffd98a','#ffffff','#d22f47']})}catch(e){}},900);
+}
+grid.addEventListener('play',e=>{grid.querySelectorAll('video').forEach(v=>{if(v!==e.target)v.pause()})},true);
+document.querySelector('.cta').addEventListener('click',e=>{e.preventDefault();document.getElementById('contact').scrollIntoView({behavior:'smooth'})});
+const pick=()=>render(location.hash==='#en'?'en':'ru');
+window.addEventListener('hashchange',pick);pick();
+}
+</script>
+</body>
+</html>
