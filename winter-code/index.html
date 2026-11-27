@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Зимний код — 45 новогодних карт · Lenur Studio</title>
+<meta name="description" content="Зимний код / Winter Code — 45 новогодних ассоциативных карт: технология × праздник × целый мир. Lenur Studio.">
+<meta property="og:title" content="Зимний код · Winter Code — 45 новогодних карт">
+<meta property="og:description" content="Каждая карта — технология, праздник и целый мир в одном кадре. Вытяни свою карту на 2027.">
+<meta property="og:image" content="img/og.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;500;800&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#060a1a;--ink2:#0d1430;--frost:#dfe9ff;--ice:#8fd3ff;--gold:#f6c661;--rose:#ff8fb8;--glass:rgba(255,255,255,.06)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(1200px 800px at 70% -10%,#1b2a66 0%,transparent 60%),radial-gradient(900px 700px at -10% 30%,#2a1240 0%,transparent 55%),var(--ink);color:var(--frost);font-family:Manrope,system-ui,sans-serif;overflow-x:hidden}
+#snow{position:fixed;inset:0;pointer-events:none;z-index:1}
+nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:20;display:flex;gap:22px;align-items:center;padding:10px 22px;border-radius:999px;background:rgba(14,20,48,.55);backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(255,255,255,.12);font-size:14px;white-space:nowrap}
+nav b{font-family:Unbounded;font-weight:500;letter-spacing:.04em}
+nav a{color:var(--frost);text-decoration:none;opacity:.8}nav a:hover{opacity:1;color:var(--gold)}
+.lang{display:flex;gap:4px}.lang button{background:none;border:1px solid rgba(255,255,255,.2);color:var(--frost);padding:3px 9px;border-radius:99px;cursor:pointer;font:600 12px Manrope}
+.lang button.on{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+section{position:relative;z-index:2;padding:110px 6vw}
+.hero{min-height:100vh;display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:4vw;padding-top:120px}
+.kicker{font:600 13px Manrope;letter-spacing:.3em;text-transform:uppercase;color:var(--ice)}
+h1{font-family:Unbounded;font-weight:800;font-size:clamp(46px,7.4vw,112px);line-height:.95;margin:18px 0 22px}
+@keyframes sheen{to{background-position:-250% 0}}
+h1 span{display:inline-block;opacity:0;transform:translateY(40px) rotate(4deg);background:linear-gradient(100deg,#fff 0%,#cfe6ff 35%,var(--gold) 55%,#fff 75%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:up .9s cubic-bezier(.2,.8,.2,1) forwards,sheen 6s linear infinite}
+@keyframes up{to{opacity:1;transform:none}}
+.lead{font-size:clamp(17px,1.5vw,21px);line-height:1.55;max-width:540px;opacity:.88}
+.btns{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+.btn{position:relative;overflow:hidden;padding:15px 26px;border-radius:999px;font:800 15px Manrope;text-decoration:none;cursor:pointer;border:0}
+.btn.p{background:linear-gradient(120deg,var(--gold),#ffe3a3);color:#2a1a00;box-shadow:0 10px 40px -10px rgba(246,198,97,.7)}
+.btn.p::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.75) 50%,transparent 70%);transform:translateX(-120%);animation:shim 3.2s ease-in-out infinite}
+@keyframes shim{60%,100%{transform:translateX(120%)}}
+.btn.g{background:var(--glass);color:var(--frost);border:1px solid rgba(255,255,255,.18)}
+.fan{position:relative;height:min(78vh,640px);perspective:1400px}
+.fan .c{position:absolute;left:50%;top:50%;width:min(23vw,250px);aspect-ratio:2/3;margin:calc(min(23vw,250px)*-.75) 0 0 calc(min(23vw,250px)*-.5);border-radius:16px;background-size:cover;background-position:center;box-shadow:0 30px 60px -20px #000,0 0 0 1px rgba(255,255,255,.14) inset;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.foil{position:absolute;inset:0;border-radius:inherit;mix-blend-mode:color-dodge;opacity:0;transition:opacity .3s;background:linear-gradient(115deg,transparent 20%,rgba(255,120,200,.35) 36%,rgba(120,220,255,.4) 48%,rgba(255,230,140,.35) 60%,transparent 76%);background-size:220% 220%;background-position:var(--fx,50%) var(--fy,50%)}
+.glare{position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.45),transparent 45%);opacity:0;transition:opacity .3s;mix-blend-mode:overlay}
+h2{font-family:Unbounded;font-weight:500;font-size:clamp(30px,4vw,56px);line-height:1.05;margin-bottom:16px}
+h2 em{font-style:normal;color:var(--gold)}
+.sub{opacity:.8;max-width:640px;line-height:1.6;font-size:17px}
+/* draw */
+.draw{display:grid;grid-template-columns:1fr 1fr;gap:5vw;align-items:center}
+.stage{position:relative;height:560px;perspective:1600px;display:grid;place-items:center}
+.deck{position:absolute;width:300px;aspect-ratio:2/3}
+.deck i{position:absolute;inset:0;border-radius:18px;background:linear-gradient(145deg,#16224f,#0a0f26);border:1px solid rgba(143,211,255,.35);box-shadow:0 20px 50px -20px #000;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.deck i::before{content:"";position:absolute;inset:14px;border-radius:12px;border:1px solid rgba(246,198,97,.45);background:repeating-linear-gradient(45deg,rgba(246,198,97,.08) 0 2px,transparent 2px 14px),radial-gradient(circle,rgba(143,211,255,.25),transparent 60%)}
+.deck i::after{content:"✦";position:absolute;inset:0;display:grid;place-items:center;font-size:54px;color:var(--gold);text-shadow:0 0 22px rgba(246,198,97,.8)}
+.flip{position:absolute;width:300px;aspect-ratio:2/3;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.2,.8,.2,1);opacity:0}
+.flip.show{opacity:1}.flip.open{transform:rotateY(180deg) scale(1.08)}
+.flip .f,.flip .b{position:absolute;inset:0;border-radius:18px;backface-visibility:hidden;overflow:hidden}
+.flip .b{background:linear-gradient(145deg,#16224f,#0a0f26);border:1px solid rgba(143,211,255,.35)}
+.flip .f{transform:rotateY(180deg);background-size:cover;background-position:center;box-shadow:0 0 80px -10px rgba(246,198,97,.6)}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}
+.chip{padding:9px 15px;border-radius:99px;background:var(--glass);border:1px solid rgba(255,255,255,.16);font-weight:600;opacity:0;transform:translateY(10px);transition:.5s}
+.chip.on{opacity:1;transform:none}
+.chip:nth-child(1){border-color:rgba(143,211,255,.6)}.chip:nth-child(2){border-color:rgba(246,198,97,.7)}.chip:nth-child(3){border-color:rgba(255,143,184,.6)}
+.wish{font-size:20px;line-height:1.5;min-height:60px;font-family:Unbounded;font-weight:300}
+/* gallery */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:22px;margin-top:44px}
+.card{position:relative;aspect-ratio:2/3;border-radius:14px;overflow:hidden;cursor:pointer;transform-style:preserve-3d;transition:transform .25s ease,box-shadow .3s;box-shadow:0 18px 40px -22px #000;opacity:0;translate:0 30px}
+.card.in{opacity:1;translate:0 0;transition:opacity .8s,translate .8s,transform .25s,box-shadow .3s}
+.card img,.card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.card video{opacity:0;transition:opacity .4s}.card video.ok{opacity:1}
+.card:hover{box-shadow:0 30px 60px -20px rgba(143,211,255,.45)}
+.card:hover .foil,.card:hover .glare{opacity:1}
+.card .cap{position:absolute;left:0;right:0;bottom:0;padding:30px 12px 12px;font-size:12.5px;font-weight:600;line-height:1.35;background:linear-gradient(transparent,rgba(4,7,20,.92));opacity:0;transform:translateY(8px);transition:.3s}
+.card:hover .cap{opacity:1;transform:none}
+.num{position:absolute;top:10px;left:10px;font:500 11px Unbounded;padding:4px 8px;border-radius:99px;background:rgba(6,10,26,.6);backdrop-filter:blur(6px)}
+/* reel */
+.reel video{width:100%;border-radius:20px;margin-top:34px;box-shadow:0 40px 100px -40px rgba(143,211,255,.5);border:1px solid rgba(255,255,255,.1)}
+/* how */
+.how{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px}
+.box{padding:30px;border-radius:22px;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.12)}
+.box h3{font-family:Unbounded;font-weight:500;margin-bottom:14px;font-size:20px}
+.box li{list-style:none;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,.12);opacity:.9}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:30px}
+.stat b{display:block;font:800 clamp(34px,4vw,54px) Unbounded;color:var(--gold)}
+.stat span{opacity:.75;font-size:14px}
+.cta{text-align:center;padding-bottom:140px}
+.cta .btns{justify-content:center}
+footer{position:relative;z-index:2;text-align:center;padding:30px;opacity:.55;font-size:13px}
+/* lightbox */
+#lb{position:fixed;inset:0;z-index:50;background:rgba(3,5,14,.88);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;gap:40px;padding:30px}
+#lb.on{display:flex}
+#lb .m{height:min(84vh,780px);aspect-ratio:2/3;border-radius:18px;overflow:hidden;position:relative;box-shadow:0 0 120px -20px rgba(246,198,97,.5)}
+#lb .m img,#lb .m video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#lb .t{max-width:360px}
+#lb .x{position:absolute;top:20px;right:28px;font-size:34px;cursor:pointer;background:none;border:0;color:#fff}
+.reveal{opacity:0;transform:translateY(40px);transition:1s cubic-bezier(.2,.8,.2,1)}.reveal.in{opacity:1;transform:none}
+[data-en]{}
+@media(max-width:860px){.hero,.draw,.how{grid-template-columns:1fr}.fan{height:430px}.fan .c{width:170px;margin:-127px 0 0 -85px}.stats{grid-template-columns:repeat(2,1fr)}nav{gap:12px;font-size:12px}nav .hide{display:none}.stage{height:480px}.deck,.flip{width:250px}#lb{flex-direction:column;gap:16px}#lb .m{height:60vh}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}h1 span,.card,.reveal{opacity:1!important;transform:none!important;translate:none!important}}
+</style>
+</head>
+<body>
+<canvas id="snow"></canvas>
+<nav><b>LENUR STUDIO</b><a class="hide" href="#draw" data-ru="Вытянуть карту" data-en="Draw a card"></a><a class="hide" href="#deck" data-ru="Все 45" data-en="All 45"></a><a href="#contact" data-ru="Заказать" data-en="Order"></a><span class="lang"><button data-l="ru" class="on">RU</button><button data-l="en">EN</button></span></nav>
+
+<section class="hero">
+ <div>
+  <div class="kicker" data-ru="Новогодняя колода · 45 карт" data-en="New Year deck · 45 cards"></div>
+  <h1 id="title"></h1>
+  <p class="lead" data-ru="Каждая карта — три мира в одном кадре: технология, праздник и место, куда хочется сбежать. Ассоциативная игра на новогодний вечер, открытки, эфир или подарок команде." data-en="Every card holds three worlds in one frame: a technology, a holiday and a place you want to escape to. An associative game for a New Year party, greeting cards, a live stream or a team gift."></p>
+  <div class="btns"><a class="btn p" href="#draw" data-ru="Вытянуть карту на 2027" data-en="Draw your 2027 card"></a><a class="btn g" href="#deck" data-ru="Смотреть все 45" data-en="See all 45"></a></div>
+ </div>
+ <div class="fan" id="fan"></div>
+</section>
+
+<section id="draw" class="draw reveal">
+ <div class="stage" id="stage"><div class="deck" id="deckpile"></div><div class="flip" id="flip"><div class="b"></div><div class="f" id="flipf"></div></div></div>
+ <div>
+  <h2 data-ru="Твоя карта <em>на 2027</em>" data-en="Your card <em>for 2027</em>"></h2>
+  <p class="sub" data-ru="Нажми на колоду. Три слова на карте — подсказка, о чём будет твой год. Придумай историю, которая их связывает, — так играют в ассоциации." data-en="Tap the deck. The three words on your card hint at what your year will be about. Make up a story that connects them — that's how the game is played."></p>
+  <div class="chips" id="chips"><span class="chip"></span><span class="chip"></span><span class="chip"></span></div>
+  <p class="wish" id="wish"></p>
+  <div class="btns"><button class="btn p" id="drawbtn" data-ru="Тянуть карту" data-en="Draw a card"></button></div>
+ </div>
+</section>
+
+<section id="deck">
+ <div class="reveal"><h2 data-ru="Вся колода: <em>45 миров</em>" data-en="The whole deck: <em>45 worlds</em>"></h2>
+ <p class="sub" data-ru="Наведи на карту — она оживает. Нажми — откроется крупно." data-en="Hover a card — it comes alive. Click to open it full size."></p></div>
+ <div class="grid" id="grid"></div>
+</section>
+
+<section class="reel reveal" id="reel" hidden>
+ <h2 data-ru="Колода <em>в движении</em>" data-en="The deck <em>in motion</em>"></h2>
+ <video id="reelv" controls playsinline muted loop preload="metadata" poster="img/og.jpg"></video>
+</section>
+
+<section class="reveal">
+ <h2 data-ru="Как мы <em>это сделали</em>" data-en="How we <em>made it</em>"></h2>
+ <div class="how">
+  <div class="box"><h3 data-ru="Руками студии" data-en="By the studio team"></h3><ul>
+   <li data-ru="Идея колоды и 45 сочетаний «технология × праздник × мир»" data-en="Deck concept and 45 “technology × holiday × world” triads"></li>
+   <li data-ru="Метафора и сцена для каждой карты" data-en="A metaphor and a scene for every card"></li>
+   <li data-ru="Единый стиль, свет и палитра всей колоды" data-en="One style, light and palette across the deck"></li>
+   <li data-ru="Отбор, ретушь, проверка каждой карты, макет 10×15 под печать" data-en="Selection, retouch, QC of every card, 10×15 print layout"></li>
+   <li data-ru="Анимация-монтаж, музыка, этот сайт" data-en="Motion edit, music and this website"></li></ul></div>
+  <div class="box"><h3 data-ru="С помощью ИИ" data-en="With AI"></h3><ul>
+   <li data-ru="Генерация изображений по нашим сценам" data-en="Image generation from our scene descriptions"></li>
+   <li data-ru="Оживление карт — 5 секунд живой анимации" data-en="Bringing cards to life — 5 seconds of motion"></li>
+   <li data-ru="Ускорение: вся колода — за дни, а не недели" data-en="Speed: the whole deck in days, not weeks"></li></ul></div>
+ </div>
+ <div class="stats"><div class="stat"><b>45</b><span data-ru="уникальных карт" data-en="unique cards"></span></div><div class="stat"><b>135</b><span data-ru="образов-подсказок" data-en="hint images"></span></div><div class="stat"><b>10×15</b><span data-ru="см, готово к печати" data-en="cm, print-ready"></span></div><div class="stat"><b>5 с</b><span data-ru="анимации на карту" data-en="of motion per card"></span></div></div>
+</section>
+
+<section class="cta reveal" id="contact">
+ <h2 data-ru="Сделаем <em>вашу</em> колоду" data-en="Let's make <em>your</em> deck"></h2>
+ <p class="sub" style="margin:0 auto" data-ru="Корпоративные игры, новогодние открытки, карточки для эфиров, серии иллюстраций и ролики в едином стиле — под ваш бренд и тему. Большие объёмы — быстро." data-en="Corporate games, greeting cards, stream cards, illustration series and videos in one style — for your brand and theme. Large volumes, fast."></p>
+ <div class="btns"><a class="btn p" href="https://wa.me/97455096531" target="_blank" rel="noopener">WhatsApp +974 5509 6531</a><a class="btn g" href="mailto:lbekirov137@gmail.com">lbekirov137@gmail.com</a><a class="btn g" href="../new-year/" data-ru="Новогодние ролики студии" data-en="Studio New Year videos"></a></div>
+</section>
+<footer>© 2026 Lenur Studio · <span data-ru="Все изображения созданы студией" data-en="All images created by the studio"></span></footer>
+
+<div id="lb"><button class="x" aria-label="close">×</button><div class="m" id="lbm"></div><div class="t"><div class="kicker" id="lbn"></div><div class="chips" id="lbc"></div></div></div>
+
+<script>
+const CARDS=[{"id": 1, "ru": ["Криптография", "Снежный шар", "Северное сияние"], "en": ["Cryptography", "Snow globe", "Northern lights"]}, {"id": 2, "ru": ["Биометрия", "Ёлка", "Лес"], "en": ["Biometrics", "Christmas tree", "Forest"]}, {"id": 3, "ru": ["Фишинг", "Ёлка", "Океан"], "en": ["Phishing", "Christmas tree", "Ocean"]}, {"id": 4, "ru": ["Троян", "Подарочная коробка", "Театр"], "en": ["Trojan", "Gift box", "Theatre"]}, {"id": 5, "ru": ["Компьютерный червь", "Гирлянда", "Лабиринт"], "en": ["Computer worm", "Garland", "Labyrinth"]}, {"id": 6, "ru": ["Вирус", "Снежинка", "Микромир"], "en": ["Virus", "Snowflake", "Microworld"]}, {"id": 7, "ru": ["Бэкдор", "Камин", "Квартира"], "en": ["Backdoor", "Fireplace", "Apartment"]}, {"id": 8, "ru": ["Ботнет", "Снеговик", "Мегаполис"], "en": ["Botnet", "Snowman", "Megacity"]}, {"id": 9, "ru": ["DDoS-атака", "Метель", "Вокзал"], "en": ["DDoS attack", "Blizzard", "Railway station"]}, {"id": 10, "ru": ["Брутфорс", "Сосулька", "Горы"], "en": ["Brute force", "Icicle", "Mountains"]}, {"id": 11, "ru": ["Социальная инженерия", "Карнавальная маска", "Цирк"], "en": ["Social engineering", "Carnival mask", "Circus"]}, {"id": 12, "ru": ["Программа-вымогатель", "Мешок с подарками", "Пустыня"], "en": ["Ransomware", "Sack of gifts", "Desert"]}, {"id": 13, "ru": ["Уязвимость", "Ледяной дворец", "Архитектура"], "en": ["Vulnerability", "Ice palace", "Architecture"]}, {"id": 14, "ru": ["Эксплойт", "Хлопушка", "Вулкан"], "en": ["Exploit", "Party cracker", "Volcano"]}, {"id": 15, "ru": ["Атака нулевого дня", "Полночь", "Будущее"], "en": ["Zero-day attack", "Midnight", "Future"]}, {"id": 16, "ru": ["Цифровой след", "Коньки", "Подводный мир"], "en": ["Digital footprint", "Ice skates", "Underwater world"]}, {"id": 17, "ru": ["Утечка данных", "Шампанское", "Хаос"], "en": ["Data leak", "Champagne", "Chaos"]}, {"id": 18, "ru": ["Шифрование", "Новогодняя открытка", "Библиотека"], "en": ["Encryption", "Greeting card", "Library"]}, {"id": 19, "ru": ["Дешифрование", "Морозные узоры", "Сновидения"], "en": ["Decryption", "Frost patterns", "Dreams"]}, {"id": 20, "ru": ["Пароль", "Письмо Деду Морозу", "Память"], "en": ["Password", "Letter to Santa", "Memory"]}, {"id": 21, "ru": ["Двухфакторная аутентификация", "Варежки", "Дружба"], "en": ["Two-factor auth", "Mittens", "Friendship"]}, {"id": 22, "ru": ["Файрвол", "Фейерверк", "Общество"], "en": ["Firewall", "Fireworks", "Society"]}, {"id": 23, "ru": ["Антивирус", "Мандарины", "Эволюция"], "en": ["Antivirus", "Tangerines", "Evolution"]}, {"id": 24, "ru": ["Песочница", "Сугроб", "Воображение"], "en": ["Sandbox", "Snowdrift", "Imagination"]}, {"id": 25, "ru": ["Honeypot", "Пряничный домик", "Лес"], "en": ["Honeypot", "Gingerbread house", "Forest"]}, {"id": 26, "ru": ["Карантин", "Снежный шар", "Одиночество"], "en": ["Quarantine", "Snow globe", "Solitude"]}, {"id": 27, "ru": ["Резервное копирование", "Календарь", "Прошлое"], "en": ["Backup", "Calendar", "The past"]}, {"id": 28, "ru": ["Цифровой сертификат", "Звезда на ёлке", "Цивилизация"], "en": ["Digital certificate", "Tree-top star", "Civilization"]}, {"id": 29, "ru": ["Электронная подпись", "Бенгальские огни", "Искусство"], "en": ["E-signature", "Sparklers", "Art"]}, {"id": 30, "ru": ["Токен", "Леденец-трость", "Метро"], "en": ["Token", "Candy cane", "Metro"]}, {"id": 31, "ru": ["Zero Trust", "Щелкунчик", "Шахматы"], "en": ["Zero Trust", "Nutcracker", "Chess"]}, {"id": 32, "ru": ["Даркнет", "Свечи", "Подземный мир"], "en": ["Darknet", "Candles", "Underworld"]}, {"id": 33, "ru": ["VPN", "Новогодний поезд", "Северное сияние"], "en": ["VPN", "Holiday train", "Northern lights"]}, {"id": 34, "ru": ["Прокси-сервер", "Дед Мороз", "Зазеркалье"], "en": ["Proxy server", "Santa Claus", "Through the looking-glass"]}, {"id": 35, "ru": ["Облачное хранилище", "Сани", "Небо"], "en": ["Cloud storage", "Sleigh", "Sky"]}, {"id": 36, "ru": ["Сервер", "Вязаный свитер", "Остров"], "en": ["Server", "Knitted sweater", "Island"]}, {"id": 37, "ru": ["Пакет данных", "Почтовый ящик", "Гроза"], "en": ["Data packet", "Mailbox", "Thunderstorm"]}, {"id": 38, "ru": ["Перехват трафика", "Шарф", "Джунгли"], "en": ["Traffic interception", "Scarf", "Jungle"]}, {"id": 39, "ru": ["Цифровая личность", "Снегурочка", "Параллельная вселенная"], "en": ["Digital identity", "Snow Maiden", "Parallel universe"]}, {"id": 40, "ru": ["Анонимность", "Санки", "Иллюзия"], "en": ["Anonymity", "Sled", "Illusion"]}, {"id": 41, "ru": ["Дипфейк", "Бокалы", "Театр"], "en": ["Deepfake", "Glasses", "Theatre"]}, {"id": 42, "ru": ["Стеганография", "Олень", "Радуга"], "en": ["Steganography", "Reindeer", "Rainbow"]}, {"id": 43, "ru": ["Хеширование", "Оливье", "Порядок"], "en": ["Hashing", "Festive salad", "Order"]}, {"id": 44, "ru": ["Киберразведка", "Курантов башня", "Время"], "en": ["Cyber intelligence", "Clock tower", "Time"]}, {"id": 45, "ru": ["Пентест", "Мишура", "Гравитация"], "en": ["Pentest", "Tinsel", "Gravity"]}];
+const pad=n=>String(n).padStart(2,'0'),img=n=>`img/c${pad(n)}.webp`,vid=n=>`v/c${pad(n)}.mp4`;
+let L=location.hash==='#en'?'en':'ru';
+const WISH={ru:["Год, когда всё сложится в один узор.","Год смелых ключей и открытых дверей.","Год, в котором чудо окажется надёжным.","Год маленьких тайн и больших открытий.","Год, когда защита превратится в свободу."],en:["A year when everything clicks into one pattern.","A year of bold keys and open doors.","A year when magic turns out to be reliable.","A year of small secrets and big discoveries.","A year when safety turns into freedom."]};
+function setLang(l){L=l;document.documentElement.lang=l;document.querySelectorAll('[data-ru]').forEach(e=>e.innerHTML=e.dataset[l]);
+ document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));
+ const t=l==='ru'?['Зимний','код']:['Winter','Code'];document.getElementById('title').innerHTML=t.map((w,i)=>`<span style="animation-delay:${.15+i*.18}s">${w}</span>`).join(' ');
+ document.querySelectorAll('.card').forEach(c=>{const d=CARDS[c.dataset.i];c.querySelector('.cap').textContent=d[l].join(' · ')});
+ if(cur)showChips(cur);history.replaceState(null,'','#'+l)}
+document.querySelectorAll('.lang button').forEach(b=>b.onclick=()=>setLang(b.dataset.l));
+// snow
+const cv=document.getElementById('snow'),cx=cv.getContext('2d');let W,H,fl=[];
+function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight}rs();addEventListener('resize',rs);
+for(let i=0;i<160;i++)fl.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2.2+.4,s:Math.random()*.6+.2,w:Math.random()*6.28});
+(function snow(){cx.clearRect(0,0,W,H);for(const f of fl){f.y+=f.s;f.w+=.01;f.x+=Math.sin(f.w)*.3;if(f.y>H){f.y=-5;f.x=Math.random()*W}cx.beginPath();cx.arc(f.x,f.y,f.r,0,6.28);cx.fillStyle=`rgba(225,236,255,${.25+f.r/4})`;cx.fill()}requestAnimationFrame(snow)})();
+// hero fan
+const FAN=[22,33,1,15,42],fan=document.getElementById('fan');
+FAN.forEach((n,i)=>{const c=document.createElement('div');c.className='c';c.style.backgroundImage=`url(${img(n)})`;c.innerHTML='<div class="foil"></div><div class="glare"></div>';c.dataset.k=i-2;fan.appendChild(c)});
+function fanPos(mx=0,my=0){fan.querySelectorAll('.c').forEach(c=>{const k=+c.dataset.k;c.style.transform=`translateX(${k*58+mx*14}px) translateY(${Math.abs(k)*18+my*10}px) rotate(${k*9+mx*3}deg) rotateY(${mx*-12}deg) rotateX(${my*10}deg)`;c.style.zIndex=10-Math.abs(k)})}fanPos();
+addEventListener('mousemove',e=>{const mx=e.clientX/innerWidth-.5,my=e.clientY/innerHeight-.5;fanPos(mx,my);fan.querySelectorAll('.c').forEach(c=>{c.style.setProperty('--fx',`${50+mx*80}%`);c.style.setProperty('--fy',`${50+my*80}%`)})});
+fan.querySelectorAll('.foil').forEach(f=>f.style.opacity=.55);
+// grid
+const grid=document.getElementById('grid');
+CARDS.forEach((d,i)=>{const c=document.createElement('div');c.className='card';c.dataset.i=i;
+ c.innerHTML=`<img loading="lazy" src="${img(d.id)}" alt=""><video muted loop playsinline preload="none"></video><div class="foil"></div><div class="glare"></div><span class="num">${pad(d.id)}</span><div class="cap"></div>`;
+ const v=c.querySelector('video');
+ c.addEventListener('mouseenter',()=>{if(!v.src)v.src=vid(d.id);v.play().then(()=>v.classList.add('ok')).catch(()=>{})});
+ c.addEventListener('mouseleave',()=>{v.pause();c.style.transform=''});
+ c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;c.style.transform=`perspective(800px) rotateY(${(x-.5)*16}deg) rotateX(${(.5-y)*16}deg) scale(1.04)`;c.style.setProperty('--gx',x*100+'%');c.style.setProperty('--gy',y*100+'%');c.style.setProperty('--fx',x*100+'%');c.style.setProperty('--fy',y*100+'%')});
+ c.addEventListener('click',()=>openLB(d));grid.appendChild(c)});
+// draw
+const pile=document.getElementById('deckpile');for(let i=0;i<6;i++){const k=document.createElement('i');k.style.transform=`translate(${i*2}px,${-i*2}px)`;pile.appendChild(k)}
+const flip=document.getElementById('flip'),chips=[...document.querySelectorAll('#chips .chip')];let cur=null,busy=false;
+function showChips(d){chips.forEach((c,i)=>{c.textContent=d[L][i]});document.getElementById('wish').textContent=WISH[L][d.id%5]}
+function draw(){if(busy)return;busy=true;flip.classList.remove('open','show');chips.forEach(c=>c.classList.remove('on'));document.getElementById('wish').textContent='';
+ const ks=[...pile.children];ks.forEach((k,i)=>{k.style.transform=`translate(${(i%2?1:-1)*(60+i*14)}px,${-i*6}px) rotate(${(i%2?1:-1)*(8+i*3)}deg)`});
+ setTimeout(()=>{ks.forEach((k,i)=>k.style.transform=`translate(${i*2}px,${-i*2}px)`)},450);
+ cur=CARDS[Math.floor(Math.random()*CARDS.length)];document.getElementById('flipf').style.backgroundImage=`url(${img(cur.id)})`;
+ setTimeout(()=>{flip.classList.add('show');setTimeout(()=>{flip.classList.add('open');showChips(cur);chips.forEach((c,i)=>setTimeout(()=>c.classList.add('on'),500+i*250));busy=false},250)},900)}
+document.getElementById('drawbtn').onclick=draw;pile.onclick=draw;
+// lightbox
+const lb=document.getElementById('lb');
+function openLB(d){const m=document.getElementById('lbm');m.innerHTML=`<img src="${img(d.id)}" alt=""><video muted loop playsinline autoplay></video>`;const v=m.querySelector('video');v.src=vid(d.id);v.onerror=()=>v.remove();v.onloadeddata=()=>v.style.opacity=1;v.style.opacity=0;v.style.transition='opacity .4s';
+ document.getElementById('lbn').textContent=(L==='ru'?'Карта ':'Card ')+pad(d.id);document.getElementById('lbc').innerHTML=d[L].map(w=>`<span class="chip on">${w}</span>`).join('');lb.classList.add('on')}
+lb.onclick=e=>{if(e.target===lb||e.target.classList.contains('x'))lb.classList.remove('on')};addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('on')});
+// reel (shown only if file exists)
+const rv=document.getElementById('reelv');rv.src='v/showreel_30s_16x9.mp4';rv.onloadedmetadata=()=>document.getElementById('reel').hidden=false;
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal,.card').forEach((el,i)=>{if(el.classList.contains('card'))el.style.transitionDelay=(i%6)*70+'ms';io.observe(el)});
+setLang(L);
+</script>
+</body>
+</html>
